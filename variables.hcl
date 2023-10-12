@@ -1,15 +1,15 @@
 // For authentication
 
-variable "zendesk_token" {
+variable "token" {
   type        = string
   description = "The Zendesk personal access token to authenticate to the Zendesk."
-  default     = ""
+  default     = "HBGMIYVGMuAGBuG9hipJT1EU3UVZwX5rRfwB0xuM"
 }
 
 variable "user_email" {
   type        = string
   description = "The email address of the user which has been used to access the zendesk account."
-  default     = ""
+  default     = "madhushree@turbot.com"
 }
 
 variable "subdomain" {

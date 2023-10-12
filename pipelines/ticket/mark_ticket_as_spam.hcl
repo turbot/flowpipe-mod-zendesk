@@ -1,12 +1,13 @@
-// usage: flowpipe pipeline run mark_ticket_as_spam  --execution-mode synchronous --pipeline-arg zendesk_token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg ticket_id="13"
+// usage: flowpipe pipeline run mark_ticket_as_spam  --execution-mode synchronous --pipeline-arg token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg ticket_id="13"
 
 pipeline "mark_ticket_as_spam" {
+  title       = "Mark a ticket as spam and suspend the user"
   description = "Mark the specified ticket as spam and suspend the user."
 
-  param "zendesk_token" {
+  param "token" {
     type        = string
-    description = "The Zendesk token for authorization"
-    default     = var.zendesk_token
+    description = "The API token for authorization."
+    default     = var.token
   }
 
   param "user_email" {
@@ -24,7 +25,6 @@ pipeline "mark_ticket_as_spam" {
   param "ticket_id" {
     type        = string
     description = "The ID of the ticket for which followers are to be listed."
-    default     = ""
   }
 
   step "http" "mark_ticket_as_spam" {
@@ -33,7 +33,7 @@ pipeline "mark_ticket_as_spam" {
     url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}/mark_as_spam.json"
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Basic ${base64encode("${param.user_email}/token:${param.zendesk_token}")}"
+      Authorization = "Basic ${base64encode("${param.user_email}/token:${param.token}")}"
     }
   }
 

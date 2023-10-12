@@ -1,12 +1,13 @@
-// usage: flowpipe pipeline run update_user  --execution-mode synchronous --pipeline-arg zendesk_token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg user_id="23902353045273" --pipeline-arg new_user_name="new-abcd" --pipeline-arg new_suspended_status="true" --pipeline-arg remote_photo_url="http://link.to/profile/image.png"
+// usage: flowpipe pipeline run update_user  --execution-mode synchronous --pipeline-arg token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg user_id="23902353045273" --pipeline-arg new_user_name="new-abcd" --pipeline-arg new_suspended_status="true" --pipeline-arg remote_photo_url="http://link.to/profile/image.png"
 
 pipeline "update_user" {
-  description = "Create a user."
+  title       = "Update a user"
+  description = "Update a user."
 
-  param "zendesk_token" {
+  param "token" {
     type        = string
-    description = "The Zendesk token for authorization"
-    default     = var.zendesk_token
+    description = "The API token for authorization."
+    default     = var.token
   }
 
   param "user_email" {
@@ -47,7 +48,7 @@ pipeline "update_user" {
     url    = "https://${param.subdomain}.zendesk.com/api/v2/users/${param.user_id}.json"
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Basic ${base64encode("${param.user_email}/token:${param.zendesk_token}")}"
+      Authorization = "Basic ${base64encode("${param.user_email}/token:${param.token}")}"
     }
     request_body = jsonencode({
       user = {

@@ -1,12 +1,13 @@
-// usage: flowpipe pipeline run update_ticket  --execution-mode synchronous --pipeline-arg zendesk_token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg ticket_id="15" --pipeline-arg new_subject="This is the last new subject of the ticket" --pipeline-arg new_body="This is the last updated body of the ticket" --pipeline-arg new_status="solved"
+// usage: flowpipe pipeline run update_ticket  --execution-mode synchronous --pipeline-arg token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg ticket_id="15" --pipeline-arg new_subject="This is the last new subject of the ticket" --pipeline-arg new_body="This is the last updated body of the ticket" --pipeline-arg new_status="solved"
 
 pipeline "update_ticket" {
-  description = "Update a ticket specified by the ticket ID."
+  title       = "Update a ticket in your account"
+  description = "Update a ticket in your account."
 
-  param "zendesk_token" {
+  param "token" {
     type        = string
-    description = "The Zendesk token for authorization"
-    default     = var.zendesk_token
+    description = "The API token for authorization."
+    default     = var.token
   }
 
   param "user_email" {
@@ -24,7 +25,6 @@ pipeline "update_ticket" {
   param "ticket_id" {
     type        = string
     description = "The ID of the ticket to update."
-    default     = ""
   }
 
   param "new_body" {
@@ -43,12 +43,12 @@ pipeline "update_ticket" {
   }
 
   step "http" "update_ticket" {
-    title  = "Update a ticket specified by the ticket ID"
+    title  = "Update a ticket in your account"
     method = "put"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}.json"
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Basic ${base64encode("${param.user_email}/token:${param.zendesk_token}")}"
+      Authorization = "Basic ${base64encode("${param.user_email}/token:${param.token}")}"
     }
     request_body = jsonencode({
       ticket = {
