@@ -64,6 +64,6 @@ pipeline "create_user" {
 
   output "user" {
     description = "The user that has been created."
-    value       = jsondecode(step.http.create_user.response_body).users
+    value       = jsondecode(step.http.create_user.response_body).user
   }
 }

@@ -37,8 +37,8 @@ pipeline "get_user" {
     }
   }
 
-  output "status_code" {
+  output "user" {
     description = "Details of a particular user."
-    value       = step.http.get_user.status_code
+    value       = jsondecode(step.http.get_user.response_body).user
   }
 }
