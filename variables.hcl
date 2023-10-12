@@ -1,7 +1,9 @@
-variable "repository_full_name" {
+// For authentication
+
+variable "zendesk_token" {
   type        = string
-  description = "The full name of the GitHub repository. Examples: turbot/steampipe, turbot/flowpipe"
-  default     = "cbruno10/github-api-test"
+  description = "The Zendesk personal access token to authenticate to the Zendesk."
+  default     = ""
 }
 
 variable "user_email" {
@@ -10,15 +12,16 @@ variable "user_email" {
   default     = ""
 }
 
-variable "user_id" {
+variable "subdomain" {
   type        = string
-  description = "The user ID of the user that needs to be updated."
-  default     = "55555"
+  description = "The subdomain to which the Zendesk account is associated to."
+  default     = "turbotsupport"
 }
 
-variable "zendesk_token" {
-  type        = string
-  description = "The Zendesk personal access token to authenticate to the Zendesk."
-  default     = ""
+// For tickets pipeline
 
+variable "ticket_id" {
+  type        = string
+  description = "The ID of a ticket in the account."
+  default     = "1"
 }

@@ -1,7 +1,7 @@
-// usage: flowpipe pipeline run delete_user  --execution-mode synchronous --pipeline-arg zendesk_token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg user_id="23902353108889"
+// usage: flowpipe pipeline run get_user  --execution-mode synchronous --pipeline-arg zendesk_token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg user_id="23953683763865"
 
-pipeline "delete_user" {
-  description = "Delete a user."
+pipeline "get_user" {
+  description = "Get details of a user."
 
   param "zendesk_token" {
     type        = string
@@ -23,29 +23,28 @@ pipeline "delete_user" {
 
   param "user_id" {
     type        = string
-    description = "The user ID of the user to be deleted."
+    description = "The user ID of the user that is being displayed."
   }
 
-  step "http" "delete_user" {
-    title  = "Delete a user"
-    method = "delete"
+  step "http" "show_user" {
+    title  = "Get details of a user"
+    method = "get"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/users/${param.user_id}.json"
     request_headers = {
       Content-Type  = "application/json"
       Authorization = "Basic ${base64encode("${param.user_email}/token:${param.zendesk_token}")}"
     }
   }
-
   output "users" {
     value = jsondecode(step.http.search_users.response_body).users
   }
   output "response_body" {
-    value = step.http.delete_user.response_body
+    value = step.http.show_user.response_body
   }
   output "response_headers" {
-    value = step.http.delete_user.response_headers
+    value = step.http.show_user.response_headers
   }
   output "status_code" {
-    value = step.http.delete_user.status_code
+    value = step.http.show_user.status_code
   }
 }
