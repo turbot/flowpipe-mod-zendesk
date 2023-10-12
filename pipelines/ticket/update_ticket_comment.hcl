@@ -1,8 +1,8 @@
 // usage: flowpipe pipeline run update_ticket_comment  --execution-mode synchronous --pipeline-arg token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg ticket_id="15" --pipeline-arg new_body="This is the last updated body of the ticket" --pipeline-arg comment_is_public="true"
 
 pipeline "update_ticket_comment" {
-  title       = "Update the comment for a particular ticket"
-  description = "Update the comment for a particular ticket."
+  title       = "Update ticket comment"
+  description = "Update the comment for a ticket."
 
   param "token" {
     type        = string
@@ -38,7 +38,7 @@ pipeline "update_ticket_comment" {
   }
 
   step "http" "update_ticket_comment" {
-    title  = "Update the comment for a particular ticket"
+    title  = "Update ticket comment"
     method = "put"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}.json"
     request_headers = {

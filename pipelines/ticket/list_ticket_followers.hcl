@@ -1,8 +1,8 @@
 // usage: flowpipe pipeline run list_ticket_followers  --execution-mode synchronous --pipeline-arg token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg ticket_id="13"
 
 pipeline "list_ticket_followers" {
-  title       = "List the followers of a ticket"
-  description = "List all the followers of a ticket in your account."
+  title       = "List ticket followers"
+  description = "List the followers of a ticket."
 
   param "token" {
     type        = string
@@ -28,7 +28,7 @@ pipeline "list_ticket_followers" {
   }
 
   step "http" "list_ticket_followers" {
-    title  = "List the followers of a particular ticket in the account"
+    title  = "List ticket followers"
     method = "get"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}/followers.json"
     request_headers = {

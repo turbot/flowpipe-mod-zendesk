@@ -1,7 +1,7 @@
 // usage: flowpipe pipeline run create_ticket  --execution-mode synchronous --pipeline-arg token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg ticket_subject="test-ticket-for-test" --pipeline-arg ticket_body="Demo ticket body"
 
 pipeline "create_ticket" {
-  title       = "Create a ticket"
+  title       = "Create ticket"
   description = "Create a ticket."
 
   param "token" {
@@ -33,7 +33,7 @@ pipeline "create_ticket" {
   }
 
   step "http" "create_ticket" {
-    title  = "Create a ticket"
+    title  = "Create ticket"
     method = "post"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets.json"
     request_headers = {

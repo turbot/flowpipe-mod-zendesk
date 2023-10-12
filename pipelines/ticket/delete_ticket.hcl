@@ -1,8 +1,8 @@
 // usage: flowpipe pipeline run delete_ticket  --execution-mode synchronous --pipeline-arg token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg ticket_id="3"
 
 pipeline "delete_ticket" {
-  title       = "Delete a ticket in your account"
-  description = "Delete a ticket in your account."
+  title       = "Delete ticket"
+  description = "Delete a ticket."
 
   param "token" {
     type        = string

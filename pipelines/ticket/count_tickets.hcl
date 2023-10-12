@@ -1,8 +1,8 @@
 // usage: flowpipe pipeline run count_tickets  --execution-mode synchronous --pipeline-arg token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport"
 
 pipeline "count_tickets" {
-  title       = "Number of tickets in your account"
-  description = "Count the number of tickets in your account."
+  title       = "Count tickets"
+  description = "Count the number of tickets."
 
   param "token" {
     type        = string
@@ -23,7 +23,7 @@ pipeline "count_tickets" {
   }
 
   step "http" "count_tickets" {
-    title  = "Count the number of tickets in the account"
+    title  = "Count tickets"
     method = "get"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/count.json"
     request_headers = {

@@ -1,8 +1,8 @@
 // usage: flowpipe pipeline run get_user  --execution-mode synchronous --pipeline-arg token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg user_id="23953683763865"
 
 pipeline "get_user" {
-  title       = "Get details of a user"
-  description = "Get details of a user."
+  title       = "Get user"
+  description = "Get user by a user ID."
 
   param "token" {
     type        = string
@@ -28,7 +28,7 @@ pipeline "get_user" {
   }
 
   step "http" "get_user" {
-    title  = "Get details of a user"
+    title  = "Get user"
     method = "get"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/users/${param.user_id}.json"
     request_headers = {

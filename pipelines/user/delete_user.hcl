@@ -1,7 +1,7 @@
 // usage: flowpipe pipeline run delete_user  --execution-mode synchronous --pipeline-arg token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg user_id="23902353108889"
 
 pipeline "delete_user" {
-  title       = "Delete a user"
+  title       = "Delete user"
   description = "Delete a user."
 
   param "token" {
@@ -28,7 +28,7 @@ pipeline "delete_user" {
   }
 
   step "http" "delete_user" {
-    title  = "Delete a user"
+    title  = "Delete user"
     method = "delete"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/users/${param.user_id}.json"
     request_headers = {

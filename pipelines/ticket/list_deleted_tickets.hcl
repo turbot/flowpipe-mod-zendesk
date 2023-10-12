@@ -1,8 +1,8 @@
 // usage: flowpipe pipeline run list_deleted_tickets  --execution-mode synchronous --pipeline-arg token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport"
 
 pipeline "list_deleted_tickets" {
-  title       = "List the deleted tickets"
-  description = "Gets a list of all deleted tickets in your account."
+  title       = "List deleted tickets"
+  description = "List the deleted tickets."
 
   param "token" {
     type        = string
@@ -23,7 +23,7 @@ pipeline "list_deleted_tickets" {
   }
 
   step "http" "list_deleted_tickets" {
-    title  = "List of all the deleted tickets in the account"
+    title  = "List deleted tickets"
     method = "get"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/deleted_tickets.json"
     request_headers = {

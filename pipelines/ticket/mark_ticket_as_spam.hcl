@@ -1,8 +1,8 @@
 // usage: flowpipe pipeline run mark_ticket_as_spam  --execution-mode synchronous --pipeline-arg token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg ticket_id="13"
 
 pipeline "mark_ticket_as_spam" {
-  title       = "Mark a ticket as spam and suspend the user"
-  description = "Mark the specified ticket as spam and suspend the user."
+  title       = "Mark ticket as spam"
+  description = "Mark a ticket as spam and suspend the user."
 
   param "token" {
     type        = string
@@ -28,7 +28,7 @@ pipeline "mark_ticket_as_spam" {
   }
 
   step "http" "mark_ticket_as_spam" {
-    title  = "Mark the specified ticket as spam and suspend the user"
+    title  = "Mark ticket as spam"
     method = "put"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}/mark_as_spam.json"
     request_headers = {

@@ -1,7 +1,7 @@
 // usage: flowpipe pipeline run create_user  --execution-mode synchronous --pipeline-arg token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg new_user_email="abbc@turbot.com" --pipeline-arg new_user_name="abbc" --pipeline-arg new_user_role="end-user"
 
 pipeline "create_user" {
-  title       = "Create a user"
+  title       = "Create user"
   description = "Create a user."
 
   param "token" {
@@ -45,7 +45,7 @@ pipeline "create_user" {
   // }
 
   step "http" "create_user" {
-    title  = "Create a user"
+    title  = "Create user"
     method = "post"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/users.json"
     request_headers = {
