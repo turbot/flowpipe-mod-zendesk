@@ -37,22 +37,8 @@ pipeline "list_ticket_followers" {
     }
   }
 
-  output "followers" {
-    value = jsondecode(step.http.list_ticket_followers.response_body).users
-  }
-  output "user_id" {
-    value = jsondecode(step.http.list_ticket_followers.response_body).users[*].id
-  }
-  output "user_name" {
-    value = jsondecode(step.http.list_ticket_followers.response_body).users[*].name
-  }
-  output "response_body" {
-    value = step.http.list_ticket_followers.response_body
-  }
-  output "response_headers" {
-    value = step.http.list_ticket_followers.response_headers
-  }
-  output "status_code" {
-    value = step.http.list_ticket_followers.status_code
+  output "ticket_followers" {
+    description = "The list of followers of a ticket."
+    value       = jsondecode(step.http.list_ticket_followers.response_body).users
   }
 }

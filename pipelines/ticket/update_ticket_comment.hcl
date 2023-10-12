@@ -48,29 +48,15 @@ pipeline "update_ticket_comment" {
     request_body = jsonencode({
       ticket = {
         comment = {
-          body = param.new_body
+          body   = param.new_body
           public = param.comment_is_public
         }
       }
     })
   }
 
-  output "ticket" {
-    value = jsondecode(step.http.update_ticket.response_body).ticket
-  }
-  output "ticket_id" {
-    value = jsondecode(step.http.update_ticket.response_body).ticket.id
-  }
   output "ticket_comments" {
-    value = jsondecode(step.http.update_ticket.response_body).ticket.comment
-  }
-  output "response_body" {
-    value = step.http.update_ticket.response_body
-  }
-  output "response_headers" {
-    value = step.http.update_ticket.response_headers
-  }
-  output "status_code" {
-    value = step.http.update_ticket.status_code
+    description = "Updated ticket comment."
+    value       = jsondecode(step.http.update_ticket_comment.response_body).ticket.comment
   }
 }

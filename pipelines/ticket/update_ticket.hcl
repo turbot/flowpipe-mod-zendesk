@@ -52,34 +52,14 @@ pipeline "update_ticket" {
     }
     request_body = jsonencode({
       ticket = {
-        status           = param.new_status
-        subject          = param.new_subject
+        status  = param.new_status
+        subject = param.new_subject
       }
     })
   }
 
   output "ticket" {
-    value = jsondecode(step.http.update_ticket.response_body).ticket
-  }
-  output "ticket_id" {
-    value = jsondecode(step.http.update_ticket.response_body).ticket.id
-  }
-  output "ticket_status" {
-    value = jsondecode(step.http.update_ticket.response_body).ticket.status
-  }
-  output "ticket_custom_status_id" {
-    value = jsondecode(step.http.update_ticket.response_body).ticket.custom_status_id
-  }
-  output "ticket_subject" {
-    value = jsondecode(step.http.update_ticket.response_body).ticket.subject
-  }
-  output "response_body" {
-    value = step.http.update_ticket.response_body
-  }
-  output "response_headers" {
-    value = step.http.update_ticket.response_headers
-  }
-  output "status_code" {
-    value = step.http.update_ticket.status_code
+    description = "The updated ticket."
+    value       = jsondecode(step.http.update_ticket.response_body).ticket
   }
 }

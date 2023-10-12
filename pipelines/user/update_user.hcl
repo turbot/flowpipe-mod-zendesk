@@ -59,15 +59,7 @@ pipeline "update_user" {
   }
 
   output "users" {
-    value = jsondecode(step.http.search_users.response_body).users
-  }
-  output "response_body" {
-    value = step.http.update_user.response_body
-  }
-  output "response_headers" {
-    value = step.http.update_user.response_headers
-  }
-  output "status_code" {
-    value = step.http.update_user.status_code
+    description = "The updated user."
+    value       = jsondecode(step.http.search_users.response_body).users
   }
 }

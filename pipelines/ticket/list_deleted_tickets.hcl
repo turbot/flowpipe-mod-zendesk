@@ -31,19 +31,8 @@ pipeline "list_deleted_tickets" {
     }
   }
 
-  output "tickets" {
-    value = jsondecode(step.http.list_deleted_tickets.response_body).deleted_tickets
-  }
-  output "tickets_subject" {
-    value = jsondecode(step.http.list_deleted_tickets.response_body).deleted_tickets[*].subject
-  }
-  output "response_body" {
-    value = step.http.list_deleted_tickets.response_body
-  }
-  output "response_headers" {
-    value = step.http.list_deleted_tickets.response_headers
-  }
-  output "status_code" {
-    value = step.http.list_deleted_tickets.status_code
+  output "deleted_tickets" {
+    description = "The list of deleted tickets in the account."
+    value       = jsondecode(step.http.list_deleted_tickets.response_body).deleted_tickets
   }
 }

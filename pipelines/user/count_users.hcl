@@ -32,15 +32,7 @@ pipeline "count_users" {
   }
 
   output "user_count" {
-    value = jsondecode(step.http.count_users.response_body).count.value
-  }
-  output "response_body" {
-    value = step.http.count_users.response_body
-  }
-  output "response_headers" {
-    value = step.http.count_users.response_headers
-  }
-  output "status_code" {
-    value = step.http.count_users.status_code
+    description = "The number of users associated to the account."
+    value       = jsondecode(step.http.count_users.response_body).count.value
   }
 }

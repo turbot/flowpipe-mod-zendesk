@@ -61,16 +61,8 @@ pipeline "create_user" {
     })
   }
 
-  output "new_user_name" {
-    value = jsondecode(step.http.create_user.response_body).users.name
-  }
-  output "response_body" {
-    value = step.http.create_user.response_body
-  }
-  output "response_headers" {
-    value = step.http.create_user.response_headers
-  }
-  output "status_code" {
-    value = step.http.create_user.status_code
+  output "user" {
+    description = "The user that has been created."
+    value       = jsondecode(step.http.create_user.response_body).users
   }
 }

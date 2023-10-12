@@ -1,6 +1,6 @@
-// usage: flowpipe pipeline run mark_tickets_as_spam  --execution-mode synchronous --pipeline-arg zendesk_token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg ticket_id="13"
+// usage: flowpipe pipeline run mark_ticket_as_spam  --execution-mode synchronous --pipeline-arg zendesk_token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg ticket_id="13"
 
-pipeline "mark_tickets_as_spam" {
+pipeline "mark_ticket_as_spam" {
   description = "Mark the specified ticket as spam and suspend the user."
 
   param "zendesk_token" {
@@ -27,7 +27,7 @@ pipeline "mark_tickets_as_spam" {
     default     = ""
   }
 
-  step "http" "mark_tickets_as_spam" {
+  step "http" "mark_ticket_as_spam" {
     title  = "Mark the specified ticket as spam and suspend the user"
     method = "put"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}/mark_as_spam.json"
@@ -37,13 +37,8 @@ pipeline "mark_tickets_as_spam" {
     }
   }
 
-  output "response_body" {
-    value = step.http.mark_tickets_as_spam.response_body
-  }
-  output "response_headers" {
-    value = step.http.mark_tickets_as_spam.response_headers
-  }
   output "status_code" {
-    value = step.http.mark_tickets_as_spam.status_code
+    description = "HTTP response status code."
+    value       = step.http.mark_ticket_as_spam.status_code
   }
 }

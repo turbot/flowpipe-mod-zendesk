@@ -38,24 +38,7 @@ pipeline "get_ticket" {
   }
 
   output "ticket" {
-    value = jsondecode(step.http.show_ticket.response_body).ticket
-  }
-  output "ticket_id" {
-    value = jsondecode(step.http.show_ticket.response_body).ticket.id
-  }
-  output "ticket_status" {
-    value = jsondecode(step.http.show_ticket.response_body).ticket.status
-  }
-  output "ticket_subject" {
-    value = jsondecode(step.http.show_ticket.response_body).ticket.subject
-  }
-  output "response_body" {
-    value = step.http.show_ticket.response_body
-  }
-  output "response_headers" {
-    value = step.http.show_ticket.response_headers
-  }
-  output "status_code" {
-    value = step.http.show_ticket.status_code
+    description = "Details of a particular ticket."
+    value       = jsondecode(step.http.get_ticket.response_body).ticket
   }
 }

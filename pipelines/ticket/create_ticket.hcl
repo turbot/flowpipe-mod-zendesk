@@ -49,16 +49,8 @@ pipeline "create_ticket" {
     })
   }
 
-  output "tickets_subject" {
-    value = jsondecode(step.http.list_tickets.response_body).tickets[*].subject
-  }
-  output "response_body" {
-    value = step.http.create_ticket.response_body
-  }
-  output "response_headers" {
-    value = step.http.create_ticket.response_headers
-  }
-  output "status_code" {
-    value = step.http.create_ticket.status_code
+  output "ticket" {
+    description = "The ticket that has been created."
+    value       = jsondecode(step.http.create_ticket.response_body).ticket
   }
 }

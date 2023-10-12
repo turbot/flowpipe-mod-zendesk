@@ -32,18 +32,7 @@ pipeline "list_tickets" {
   }
 
   output "tickets" {
-    value = jsondecode(step.http.list_tickets.response_body).tickets
-  }
-  output "tickets_subject" {
-    value = jsondecode(step.http.list_tickets.response_body).tickets[*].subject
-  }
-  output "response_body" {
-    value = step.http.list_tickets.response_body
-  }
-  output "response_headers" {
-    value = step.http.list_tickets.response_headers
-  }
-  output "status_code" {
-    value = step.http.list_tickets.status_code
+    description = "The list of all tickets in the account."
+    value       = jsondecode(step.http.list_tickets.response_body).tickets
   }
 }

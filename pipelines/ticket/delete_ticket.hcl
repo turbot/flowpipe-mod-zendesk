@@ -24,7 +24,6 @@ pipeline "delete_ticket" {
   param "ticket_id" {
     type        = string
     description = "The ID of the ticket to be deleted."
-    default     = ""
   }
 
   step "http" "delete_ticket" {
@@ -36,14 +35,8 @@ pipeline "delete_ticket" {
       Authorization = "Basic ${base64encode("${param.user_email}/token:${param.zendesk_token}")}"
     }
   }
-  
-  output "response_body" {
-    value = step.http.delete_ticket.response_body
-  }
-  output "response_headers" {
-    value = step.http.delete_ticket.response_headers
-  }
   output "status_code" {
-    value = step.http.delete_ticket.status_code
+    description = "HTTP response status code."
+    value       = step.http.delete_ticket.status_code
   }
 }

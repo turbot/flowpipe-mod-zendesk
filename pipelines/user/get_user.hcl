@@ -35,16 +35,9 @@ pipeline "get_user" {
       Authorization = "Basic ${base64encode("${param.user_email}/token:${param.zendesk_token}")}"
     }
   }
-  output "users" {
-    value = jsondecode(step.http.search_users.response_body).users
-  }
-  output "response_body" {
-    value = step.http.show_user.response_body
-  }
-  output "response_headers" {
-    value = step.http.show_user.response_headers
-  }
+
   output "status_code" {
-    value = step.http.show_user.status_code
+    description = "Details of a particular user."
+    value       = step.http.show_user.status_code
   }
 }

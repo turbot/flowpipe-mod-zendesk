@@ -1,7 +1,7 @@
 // usage: flowpipe pipeline run list_users  --execution-mode synchronous --pipeline-arg zendesk_token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport"
 
 pipeline "list_users" {
-  description = "List the users."
+  description = "List the users associated to the account."
 
   param "zendesk_token" {
     type        = string
@@ -22,7 +22,7 @@ pipeline "list_users" {
   }
 
   step "http" "list_users" {
-    title  = "List the users"
+    title  = "List the users associated to the account"
     method = "get"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/users.json"
     request_headers = {
@@ -32,15 +32,7 @@ pipeline "list_users" {
   }
 
   output "users" {
-    value = jsondecode(step.http.list_users.response_body).users
-  }
-  output "response_body" {
-    value = step.http.list_users.response_body
-  }
-  output "response_headers" {
-    value = step.http.list_users.response_headers
-  }
-  output "status_code" {
-    value = step.http.list_users.status_code
+    description = "The list of users associated to the account."
+    value       = jsondecode(step.http.list_users.response_body).users
   }
 }

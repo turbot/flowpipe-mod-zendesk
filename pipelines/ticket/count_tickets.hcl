@@ -22,7 +22,7 @@ pipeline "count_tickets" {
   }
 
   step "http" "count_tickets" {
-    title  = "Count teh number of tickets in the account"
+    title  = "Count the number of tickets in the account"
     method = "get"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/count.json"
     request_headers = {
@@ -32,15 +32,7 @@ pipeline "count_tickets" {
   }
 
   output "tickets_count" {
-    value = jsondecode(step.http.count_tickets.response_body).count.value
-  }
-  output "response_body" {
-    value = step.http.count_tickets.response_body
-  }
-  output "response_headers" {
-    value = step.http.count_tickets.response_headers
-  }
-  output "status_code" {
-    value = step.http.count_tickets.status_code
+    description = "The number of tickets in an account."
+    value       = jsondecode(step.http.count_tickets.response_body).count.value
   }
 }
