@@ -26,7 +26,7 @@ pipeline "get_user" {
     description = "The user ID of the user that is being displayed."
   }
 
-  step "http" "show_user" {
+  step "http" "get_user" {
     title  = "Get details of a user"
     method = "get"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/users/${param.user_id}.json"
@@ -38,6 +38,6 @@ pipeline "get_user" {
 
   output "status_code" {
     description = "Details of a particular user."
-    value       = step.http.show_user.status_code
+    value       = step.http.get_user.status_code
   }
 }

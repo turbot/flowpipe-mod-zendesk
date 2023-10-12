@@ -60,6 +60,6 @@ pipeline "update_user" {
 
   output "users" {
     description = "The updated user."
-    value       = jsondecode(step.http.search_users.response_body).users
+    value       = jsondecode(step.http.update_user.response_body).users
   }
 }
