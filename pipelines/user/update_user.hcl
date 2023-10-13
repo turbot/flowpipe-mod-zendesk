@@ -1,4 +1,4 @@
-// usage: flowpipe pipeline run update_user  --execution-mode synchronous --pipeline-arg token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg user_id="23902353045273" --pipeline-arg new_user_name="new-abcd" --pipeline-arg new_suspended_status="true" --pipeline-arg remote_photo_url="http://link.to/profile/image.png"
+// usage: flowpipe pipeline run update_user  --execution-mode synchronous --pipeline-arg token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg user_id="23902353045273" --pipeline-arg user_name="new-abcd" --pipeline-arg suspended_status="true" --pipeline-arg remote_photo_url="http://link.to/profile/image.png"
 
 pipeline "update_user" {
   title       = "Update user"
@@ -25,21 +25,25 @@ pipeline "update_user" {
   param "user_id" {
     type        = string
     description = "The user ID of the user that is being displayed."
+    optional    = true
   }
 
-  param "new_user_name" {
+  param "user_name" {
     type        = string
     description = "The updated name of the user."
+    optional    = true
   }
 
-  param "new_suspended_status" {
+  param "suspended_status" {
     type        = string
     description = "The updated state of the user whether suspended or not."
+    optional    = true
   }
 
-  param "new_remote_photo_url" {
+  param "remote_photo_url" {
     type        = string
     description = "The updated remote photo url of the user."
+    optional    = true
   }
 
   step "http" "update_user" {
@@ -52,9 +56,9 @@ pipeline "update_user" {
     }
     request_body = jsonencode({
       user = {
-        name             = param.new_user_name
-        suspended        = param.new_suspended_status
-        remote_photo_url = param.new_remote_photo_url
+        name             = param.user_name
+        suspended        = param.suspended_status
+        remote_photo_url = param.remote_photo_url
       }
     })
   }

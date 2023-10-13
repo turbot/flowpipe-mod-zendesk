@@ -1,4 +1,4 @@
-// usage: flowpipe pipeline run create_ticket  --execution-mode synchronous --pipeline-arg token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg comment_body="Demo ticket comment body" --pipeline-arg comment_public=true --pipeline-arg comment_author_id="23902305962393"
+// usage: flowpipe pipeline run create_ticket  --execution-mode synchronous --pipeline-arg token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg comment='{ "body":"Final new ticket for test", "public": true, "author_id": 23902305962393 }'
 
 pipeline "create_ticket" {
   title       = "Create ticket"
