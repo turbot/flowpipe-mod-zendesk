@@ -6,20 +6,26 @@ pipeline "list_tickets" {
 
   param "token" {
     type        = string
-    description = "The API token for authorization."
+    description = "API tokens are auto-generated passwords in the Zendesk Admin Center."
     default     = var.token
   }
 
   param "user_email" {
     type        = string
-    description = "The user email ID of the user the account belongs to."
+    description = "The email ID of the user the account belongs to."
     default     = var.user_email
   }
 
   param "subdomain" {
     type        = string
-    description = "The name of the subdomain under which the account is created."
+    description = "The subdomain under which the account is created."
     default     = var.subdomain
+  }
+
+  param "external_id" {
+    type        = string
+    description = "An ID you can use to link Zendesk Support tickets to local records."
+    optional    = true
   }
 
   step "http" "list_tickets" {

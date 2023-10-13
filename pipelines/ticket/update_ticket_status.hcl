@@ -1,8 +1,8 @@
-// usage: flowpipe pipeline run create_ticket  --execution-mode synchronous --pipeline-arg token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg comment_body="Demo ticket comment body" --pipeline-arg comment_public=true --pipeline-arg comment_author_id="23902305962393"
+// usage: flowpipe pipeline run update_ticket_status  --execution-mode synchronous --pipeline-arg token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg ticket_id="15" --pipeline-arg status="solved"
 
-pipeline "create_ticket" {
-  title       = "Create ticket"
-  description = "Create a ticket."
+pipeline "update_ticket_status" {
+  title       = "Update ticket status"
+  description = "Update a ticket status."
 
   param "token" {
     type        = string
@@ -29,6 +29,7 @@ pipeline "create_ticket" {
       author_id = number
     })
     description = "An object that defines the properties of the ticket comment."
+    optional    = true
   }
 
   param "allow_attachments" {
@@ -182,8 +183,7 @@ pipeline "create_ticket" {
 
   param "ticket_id" {
     type        = number
-    description = "Automatically assigned when the ticket is created."
-    optional    = true
+    description = "The ID of the ticket."
   }
 
   param "is_public" {
@@ -205,7 +205,9 @@ pipeline "create_ticket" {
   }
 
   param "metadata" {
-    type = object({})
+    type = object({
+      data = map(any)
+    })
     description = "Write only. Metadata for the audit. In the audit object, the data is specified in the custom property of the metadata object. See Setting Metadata."
     optional    = true
   }
@@ -285,7 +287,6 @@ pipeline "create_ticket" {
   param "status" {
     type        = string
     description = "The state of the ticket. If your account has activated custom ticket statuses, this is the ticket's status category. See custom ticket statuses. Allowed values are 'new', 'open', 'pending', 'hold', 'solved', or 'closed'."
-    optional    = true
   }
 
   param "subject" {
@@ -364,10 +365,10 @@ pipeline "create_ticket" {
     optional    = true
   }
 
-  step "http" "create_ticket" {
-    title  = "Create ticket"
-    method = "post"
-    url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets.json"
+  step "http" "update_ticket_status" {
+    title  = "Update ticket"
+    method = "put"
+    url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}.json"
     request_headers = {
       Content-Type  = "application/json"
       Authorization = "Basic ${base64encode("${param.user_email}/token:${param.token}")}"
@@ -380,7 +381,7 @@ pipeline "create_ticket" {
   }
 
   output "ticket" {
-    description = "The ticket that has been created."
-    value       = jsondecode(step.http.create_ticket.response_body).ticket
+    description = "The updated ticket."
+    value       = jsondecode(step.http.update_ticket_status.response_body).ticket
   }
 }
