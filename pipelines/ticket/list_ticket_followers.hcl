@@ -1,13 +1,13 @@
-// usage: flowpipe pipeline run list_ticket_followers  --execution-mode synchronous --pipeline-arg token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg ticket_id="13"
+// usage: flowpipe pipeline run list_ticket_followers  --execution-mode synchronous --pipeline-arg api_token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg ticket_id="13"
 
 pipeline "list_ticket_followers" {
-  title       = "List ticket followers"
+  title       = "List Ticket Followers"
   description = "List the followers of a ticket."
 
-  param "token" {
+  param "api_token" {
     type        = string
     description = "API tokens are auto-generated passwords in the Zendesk Admin Center."
-    default     = var.token
+    default     = var.api_token
   }
 
   param "user_email" {
@@ -28,12 +28,12 @@ pipeline "list_ticket_followers" {
   }
 
   step "http" "list_ticket_followers" {
-    title  = "List ticket followers"
+    title  = "List Ticket Followers"
     method = "get"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}/followers.json"
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Basic ${base64encode("${param.user_email}/token:${param.token}")}"
+      Authorization = "Basic ${base64encode("${param.user_email}/token:${param.api_token}")}"
     }
   }
 

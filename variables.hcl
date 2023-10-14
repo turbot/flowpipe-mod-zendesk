@@ -1,6 +1,6 @@
 // For authentication
 
-variable "token" {
+variable "api_token" {
   type        = string
   description = "The Zendesk personal access token to authenticate to the Zendesk."
   default     = "HBGMIYVGMuAGBuG9hipJT1EU3UVZwX5rRfwB0xuM"

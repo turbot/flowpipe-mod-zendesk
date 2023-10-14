@@ -1,13 +1,13 @@
-// usage: flowpipe pipeline run update_user  --execution-mode synchronous --pipeline-arg token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg user_id="23902353045273" --pipeline-arg user_name="new-abcd" --pipeline-arg suspended_status="true" --pipeline-arg remote_photo_url="http://link.to/profile/image.png"
+// usage: flowpipe pipeline run update_user  --execution-mode synchronous --pipeline-arg api_token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg user_id="23902353045273" --pipeline-arg user_name="new-abcd" --pipeline-arg suspended_status="true" --pipeline-arg remote_photo_url="http://link.to/profile/image.png"
 
 pipeline "update_user" {
-  title       = "Update user"
+  title       = "Update User"
   description = "Update a user."
 
-  param "token" {
+  param "api_token" {
     type        = string
     description = "API tokens are auto-generated passwords in the Zendesk Admin Center."
-    default     = var.token
+    default     = var.api_token
   }
 
   param "user_email" {
@@ -47,20 +47,14 @@ pipeline "update_user" {
   }
 
   step "http" "update_user" {
-    title  = "Update user"
+    title  = "Update User"
     method = "put"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/users/${param.user_id}.json"
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Basic ${base64encode("${param.user_email}/token:${param.token}")}"
+      Authorization = "Basic ${base64encode("${param.user_email}/token:${param.api_token}")}"
     }
-    request_body = jsonencode({
-      user = {
-        name             = param.user_name
-        suspended        = param.suspended_status
-        remote_photo_url = param.remote_photo_url
-      }
-    })
+    request_body = jsonencode({ user = { for name, value in param : name => value if value != null } })
   }
 
   output "user" {

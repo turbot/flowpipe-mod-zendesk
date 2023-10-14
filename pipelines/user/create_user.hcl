@@ -1,13 +1,13 @@
-// usage: flowpipe pipeline run create_user  --execution-mode synchronous --pipeline-arg token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg new_user_email="abbc@turbot.com" --pipeline-arg new_user_name="abbc" --pipeline-arg new_user_role="end-user"
+// usage: flowpipe pipeline run create_user  --execution-mode synchronous --pipeline-arg api_token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg new_user_email="abbc@turbot.com" --pipeline-arg new_user_name="abbc" --pipeline-arg new_user_role="end-user"
 
 pipeline "create_user" {
-  title       = "Create user"
+  title       = "Create User"
   description = "Create a user."
 
-  param "token" {
+  param "api_token" {
     type        = string
     description = "API tokens are auto-generated passwords in the Zendesk Admin Center."
-    default     = var.token
+    default     = var.api_token
   }
 
   param "user_email" {
@@ -45,21 +45,14 @@ pipeline "create_user" {
   // }
 
   step "http" "create_user" {
-    title  = "Create user"
+    title  = "Create User"
     method = "post"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/users.json"
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Basic ${base64encode("${param.user_email}/token:${param.token}")}"
+      Authorization = "Basic ${base64encode("${param.user_email}/token:${param.api_token}")}"
     }
-    request_body = jsonencode({
-      user = {
-        name  = param.new_user_name
-        email = param.new_user_email
-        role  = param.new_user_role
-        // custom_role_id = param.new_user_custom_role_id
-      }
-    })
+    request_body = jsonencode({ user = { for name, value in param : name => value if value != null } })
   }
 
   output "user" {

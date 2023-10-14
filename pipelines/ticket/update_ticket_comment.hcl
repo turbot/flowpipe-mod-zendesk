@@ -1,13 +1,13 @@
-// usage: flowpipe pipeline run update_ticket_comment  --execution-mode synchronous --pipeline-arg token="HBGMIYVGMuAGBuG9hipJT1EU3UVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg ticket_id="16" --pipeline-arg subdomain="turbotsupport" --pipeline-arg comment='{ "body":"New updated token with loop part 3", "public": true, "author_id": 23902305962393 }'
+// usage: flowpipe pipeline run update_ticket_comment  --execution-mode synchronous --pipeline-arg api_token="HBGMIYVGMuAGBuG9hipJT1EU3UVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg ticket_id="16" --pipeline-arg subdomain="turbotsupport" --pipeline-arg comment='{ "body":"New updated token with loop part 3", "public": true, "author_id": 23902305962393 }'
 
 pipeline "update_ticket_comment" {
-  title       = "Update ticket comment"
+  title       = "Update Ticket Comment"
   description = "Update a ticket comment."
 
-  param "token" {
+  param "api_token" {
     type        = string
     description = "API tokens are auto-generated passwords in the Zendesk Admin Center."
-    default     = var.token
+    default     = var.api_token
   }
 
   param "user_email" {
@@ -371,18 +371,14 @@ pipeline "update_ticket_comment" {
   }
 
   step "http" "update_ticket_comment" {
-    title  = "Update ticket comment"
+    title  = "Update Ticket Comment"
     method = "put"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}.json"
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Basic ${base64encode("${param.user_email}/token:${param.token}")}"
+      Authorization = "Basic ${base64encode("${param.user_email}/token:${param.api_token}")}"
     }
-    request_body = jsonencode({
-      ticket = {
-        for name, value in param : name => value if value != null
-      }
-    })
+    request_body = jsonencode({ ticket = { for name, value in param : name => value if value != null } })
   }
 
   output "ticket" {
