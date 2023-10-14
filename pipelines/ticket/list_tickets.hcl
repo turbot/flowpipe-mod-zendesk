@@ -22,12 +22,6 @@ pipeline "list_tickets" {
     default     = var.subdomain
   }
 
-  param "external_id" {
-    type        = string
-    description = "An ID you can use to link Zendesk Support tickets to local records."
-    optional    = true
-  }
-
   step "http" "list_tickets" {
     title  = "List tickets"
     method = "get"
