@@ -17,11 +17,3 @@ variable "subdomain" {
   description = "The subdomain to which the Zendesk account is associated to."
   default     = "turbotsupport"
 }
-
-// For tickets pipeline
-
-variable "ticket_id" {
-  type        = string
-  description = "The ID of a ticket in the account."
-  default     = "1"
-}
