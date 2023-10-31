@@ -1,4 +1,4 @@
-// usage: flowpipe pipeline run list_ticket_comments  --execution-mode synchronous --pipeline-arg api_token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg ticket_id="17"
+// usage: flowpipe pipeline run list_ticket_comments --pipeline-arg ticket_id="17"
 
 pipeline "list_ticket_comments" {
   title       = "List Ticket Comments"

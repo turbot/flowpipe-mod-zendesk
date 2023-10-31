@@ -1,0 +1,4 @@
+# Zendesk token
+api_token="my-token"
+user_email="my@email.here"
+subdomain="my-subdomain"

@@ -1,4 +1,4 @@
-// usage: flowpipe pipeline run list_users  --execution-mode synchronous --pipeline-arg api_token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport"
+// usage: flowpipe pipeline run list_users
 
 pipeline "list_users" {
   title       = "List Users"

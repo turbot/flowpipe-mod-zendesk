@@ -1,4 +1,4 @@
-// usage: flowpipe pipeline run update_ticket_status  --execution-mode synchronous --pipeline-arg api_token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg ticket_id="15" --pipeline-arg status="solved"
+// usage: flowpipe pipeline run update_ticket_status --pipeline-arg ticket_id="15" --pipeline-arg status="solved"
 
 pipeline "update_ticket_status" {
   title       = "Update Ticket Status"

@@ -1,4 +1,4 @@
-// usage: flowpipe pipeline run update_user  --execution-mode synchronous --pipeline-arg api_token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg user_id="23902353045273" --pipeline-arg user_name="new-abcd" --pipeline-arg suspended_status="true" --pipeline-arg remote_photo_url="http://link.to/profile/image.png"
+// usage: flowpipe pipeline run update_user --pipeline-arg user_id="23902353045273" --pipeline-arg user_name="new-abcd" --pipeline-arg suspended_status="true" --pipeline-arg remote_photo_url="http://link.to/profile/image.png"
 
 pipeline "update_user" {
   title       = "Update User"

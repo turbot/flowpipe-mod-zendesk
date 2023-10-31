@@ -1,4 +1,4 @@
-// usage: flowpipe pipeline run create_ticket  --execution-mode synchronous --pipeline-arg api_token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg comment='{ "body":"Final new ticket for test", "public": true, "author_id": 23902305962393 }'
+// usage: flowpipe pipeline run create_ticket --pipeline-arg comment='{ "body":"Final new ticket for test", "public": true, "author_id": 23902305962393 }'
 
 pipeline "create_ticket" {
   title       = "Create Ticket"
@@ -372,7 +372,7 @@ pipeline "create_ticket" {
       Content-Type  = "application/json"
       Authorization = "Basic ${base64encode("${param.user_email}/token:${param.api_token}")}"
     }
-    request_body = jsonencode({ ticket { for name, value in param : name => value if value != null } })
+    request_body = jsonencode({ ticket = { for name, value in param : name => value if value != null } })
   }
 
   output "ticket" {

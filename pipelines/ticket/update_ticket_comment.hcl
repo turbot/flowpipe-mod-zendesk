@@ -1,4 +1,4 @@
-// usage: flowpipe pipeline run update_ticket_comment  --execution-mode synchronous --pipeline-arg api_token="HBGMIYVGMuAGBuG9hipJT1EU3UVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg ticket_id="16" --pipeline-arg subdomain="turbotsupport" --pipeline-arg comment='{ "body":"New updated token with loop part 3", "public": true, "author_id": 23902305962393 }'
+// usage: flowpipe pipeline run update_ticket_comment --pipeline-arg ticket_id="16" --pipeline-arg comment='{ "body":"New updated token with loop part 3", "public": true, "author_id": 23902305962393 }'
 
 pipeline "update_ticket_comment" {
   title       = "Update Ticket Comment"

@@ -1,4 +1,4 @@
-// usage: flowpipe pipeline run create_user  --execution-mode synchronous --pipeline-arg api_token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg new_user_email="abbc@turbot.com" --pipeline-arg new_user_name="abbc" --pipeline-arg new_user_role="end-user"
+// usage: flowpipe pipeline run create_user --pipeline-arg new_user_email="abbc@turbot.com" --pipeline-arg new_user_name="abbc" --pipeline-arg new_user_role="end-user"
 
 pipeline "create_user" {
   title       = "Create User"

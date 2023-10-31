@@ -1,4 +1,4 @@
-// usage: flowpipe pipeline run get_ticket  --execution-mode synchronous --pipeline-arg api_token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg ticket_id="3"
+// usage: flowpipe pipeline run get_ticket --pipeline-arg ticket_id="3"
 
 pipeline "get_ticket" {
   title       = "Get Ticket"

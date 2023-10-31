@@ -1,4 +1,4 @@
-// usage: flowpipe pipeline run get_user  --execution-mode synchronous --pipeline-arg api_token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg user_id="23953683763865"
+// usage: flowpipe pipeline run get_user --pipeline-arg user_id="23953683763865"
 
 pipeline "get_user" {
   title       = "Get User"

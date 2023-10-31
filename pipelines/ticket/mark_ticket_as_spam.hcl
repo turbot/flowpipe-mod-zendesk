@@ -1,4 +1,4 @@
-// usage: flowpipe pipeline run mark_ticket_as_spam  --execution-mode synchronous --pipeline-arg api_token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg ticket_id="13"
+// usage: flowpipe pipeline run mark_ticket_as_spam --pipeline-arg ticket_id="13"
 
 pipeline "mark_ticket_as_spam" {
   title       = "Mark Ticket as Spam"

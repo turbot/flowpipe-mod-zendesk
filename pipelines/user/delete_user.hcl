@@ -1,4 +1,4 @@
-// usage: flowpipe pipeline run delete_user  --execution-mode synchronous --pipeline-arg api_token="HBYYYYYGMuAGBuG9hipJTQQQQQVZwX5rRfwB0xuM" --pipeline-arg user_email="madhushree@turbot.com" --pipeline-arg subdomain="turbotsupport" --pipeline-arg user_id="23902353108889"
+// usage: flowpipe pipeline run delete_user --pipeline-arg user_id="23902353108889"
 
 pipeline "delete_user" {
   title       = "Delete User"
