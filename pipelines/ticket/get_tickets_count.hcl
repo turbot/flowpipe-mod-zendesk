@@ -1,5 +1,5 @@
-# usage: flowpipe pipeline run tickets_count
-pipeline "tickets_count" {
+# usage: flowpipe pipeline run get_tickets_count
+pipeline "get_tickets_count" {
   title       = "Count Tickets"
   description = "Count the number of tickets."
 
@@ -21,7 +21,7 @@ pipeline "tickets_count" {
     default     = var.subdomain
   }
 
-  step "http" "tickets_count" {
+  step "http" "get_tickets_count" {
     method = "get"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/count.json"
     request_headers = {
@@ -32,6 +32,6 @@ pipeline "tickets_count" {
 
   output "tickets_count" {
     description = "The number of tickets in the account."
-    value       = step.http.tickets_count.response_body.count.value
+    value       = step.http.get_tickets_count.response_body.count.value
   }
 }
