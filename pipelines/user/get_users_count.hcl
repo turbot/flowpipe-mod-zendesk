@@ -1,5 +1,5 @@
-# usage: flowpipe pipeline run count_users
-pipeline "count_users" {
+# usage: flowpipe pipeline run get_users_count
+pipeline "get_users_count" {
   title       = "Count Users"
   description = "Count the number of users."
 
@@ -21,7 +21,7 @@ pipeline "count_users" {
     default     = var.subdomain
   }
 
-  step "http" "count_users" {
+  step "http" "get_users_count" {
     method = "get"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/users/count.json"
     request_headers = {
@@ -30,8 +30,8 @@ pipeline "count_users" {
     }
   }
 
-  output "user_count" {
+  output "users_count" {
     description = "The number of users associated to the account."
-    value       = step.http.count_users.response_body.count.value
+    value       = step.http.get_users_count.response_body.count.value
   }
 }

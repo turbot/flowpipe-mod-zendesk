@@ -34,9 +34,4 @@ pipeline "list_tickets" {
     description = "The list of all tickets in the account."
     value       = step.http.list_tickets.response_body.tickets
   }
-
-  output "tickets_count" {
-    description = "The number of tickets in the account."
-    value       = step.http.list_tickets.response_body.count
-  }
 }

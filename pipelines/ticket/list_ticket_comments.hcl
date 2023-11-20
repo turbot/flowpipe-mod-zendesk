@@ -51,9 +51,4 @@ pipeline "list_ticket_comments" {
     description = "The list of all comments for a ticket."
     value       = step.http.list_ticket_comments.response_body
   }
-
-  output "ticket_comments_count" {
-    description = "The count of all comments for a ticket."
-    value       = step.http.list_ticket_comments.response_body.count
-  }
 }
