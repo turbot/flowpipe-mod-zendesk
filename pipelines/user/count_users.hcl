@@ -1,29 +1,27 @@
-// usage: flowpipe pipeline run count_users
-
+# usage: flowpipe pipeline run count_users
 pipeline "count_users" {
   title       = "Count Users"
   description = "Count the number of users."
 
   param "api_token" {
     type        = string
-    description = "API tokens are auto-generated passwords in the Zendesk Admin Center."
+    description = local.api_token_param_description
     default     = var.api_token
   }
 
   param "user_email" {
     type        = string
-    description = "The email ID of the user the account belongs to."
+    description = local.user_email_param_description
     default     = var.user_email
   }
 
   param "subdomain" {
     type        = string
-    description = "The subdomain under which the account is created."
+    description = local.subdomain_param_description
     default     = var.subdomain
   }
 
   step "http" "count_users" {
-    title  = "Count Users"
     method = "get"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/users/count.json"
     request_headers = {
@@ -34,6 +32,6 @@ pipeline "count_users" {
 
   output "user_count" {
     description = "The number of users associated to the account."
-    value       = jsondecode(step.http.count_users.response_body).count.value
+    value       = step.http.count_users.response_body.count.value
   }
 }

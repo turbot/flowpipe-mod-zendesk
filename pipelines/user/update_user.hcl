@@ -1,24 +1,23 @@
-// usage: flowpipe pipeline run update_user --pipeline-arg user_id="23902353045273" --pipeline-arg user_name="new-abcd" --pipeline-arg suspended_status="true" --pipeline-arg remote_photo_url="http://link.to/profile/image.png"
-
+# usage: flowpipe pipeline run update_user --pipeline-arg user_id="23902353045273" --pipeline-arg user_name="new-abcd" --pipeline-arg suspended_status="true" --pipeline-arg remote_photo_url="http://link.to/profile/image.png"
 pipeline "update_user" {
   title       = "Update User"
   description = "Update a user."
 
   param "api_token" {
     type        = string
-    description = "API tokens are auto-generated passwords in the Zendesk Admin Center."
+    description = local.api_token_param_description
     default     = var.api_token
   }
 
   param "user_email" {
     type        = string
-    description = "The email ID of the user the account belongs to."
+    description = local.user_email_param_description
     default     = var.user_email
   }
 
   param "subdomain" {
     type        = string
-    description = "The subdomain under which the account is created."
+    description = local.subdomain_param_description
     default     = var.subdomain
   }
 
@@ -28,7 +27,7 @@ pipeline "update_user" {
     optional    = true
   }
 
-  param "user_name" {
+  param "name" {
     type        = string
     description = "The updated name of the user."
     optional    = true
@@ -47,7 +46,6 @@ pipeline "update_user" {
   }
 
   step "http" "update_user" {
-    title  = "Update User"
     method = "put"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/users/${param.user_id}.json"
     request_headers = {
@@ -58,7 +56,7 @@ pipeline "update_user" {
   }
 
   output "user" {
-    description = "The updated user."
-    value       = jsondecode(step.http.update_user.response_body).user
+    description = "The updated user details."
+    value       = step.http.update_user.response_body.user
   }
 }

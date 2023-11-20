@@ -1,4 +1,4 @@
-# Zendesk Mod for Flowpipe
+# Zendesk Library Mod for Flowpipe
 
 A collection of [Flowpipe](https://flowpipe.io) pipelines that can be used to:
 - Create tickets
@@ -6,7 +6,7 @@ A collection of [Flowpipe](https://flowpipe.io) pipelines that can be used to:
 - Manage users
 - And more!
 
-![image](https://github.com/turbot/flowpipe-mod-zendesk/blob/staging/docs/images/flowpipe_test_run.png?raw=true)
+![image](https://github.com/turbot/flowpipe-mod-zendesk/blob/main/docs/images/flowpipe_pipeline_run.png?raw=true)
 
 ## Documentation
 
@@ -85,7 +85,7 @@ Please see the [contribution guidelines](https://github.com/turbot/flowpipe/blob
 Want to help but not sure where to start? Pick up one of the `help wanted` issues:
 
 - [Flowpipe](https://github.com/turbot/flowpipe/labels/help%20wanted)
-- [Zendesk Mod](https://github.com/turbot/flowpipe-mod-zendesk/labels/help%20wanted)
+- [Zendesk Library Mod](https://github.com/turbot/flowpipe-mod-zendesk/labels/help%20wanted)
 
 ## License
 

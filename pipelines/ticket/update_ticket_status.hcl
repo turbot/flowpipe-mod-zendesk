@@ -1,24 +1,23 @@
-// usage: flowpipe pipeline run update_ticket_status --pipeline-arg ticket_id="15" --pipeline-arg status="solved"
-
+# usage: flowpipe pipeline run update_ticket_status --pipeline-arg ticket_id="15" --pipeline-arg status="solved"
 pipeline "update_ticket_status" {
   title       = "Update Ticket Status"
   description = "Update a ticket status."
 
   param "api_token" {
     type        = string
-    description = "API tokens are auto-generated passwords in the Zendesk Admin Center."
+    description = local.api_token_param_description
     default     = var.api_token
   }
 
   param "user_email" {
     type        = string
-    description = "The email ID of the user the account belongs to."
+    description = local.user_email_param_description
     default     = var.user_email
   }
 
   param "subdomain" {
     type        = string
-    description = "The subdomain under which the account is created."
+    description = local.subdomain_param_description
     default     = var.subdomain
   }
 
@@ -366,7 +365,6 @@ pipeline "update_ticket_status" {
   }
 
   step "http" "update_ticket_status" {
-    title  = "Update Ticket Status"
     method = "put"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}.json"
     request_headers = {
@@ -377,7 +375,7 @@ pipeline "update_ticket_status" {
   }
 
   output "ticket" {
-    description = "The updated ticket status."
-    value       = jsondecode(step.http.update_ticket_status.response_body).ticket.status
+    description = "The updated ticket details."
+    value       = step.http.update_ticket_status.response_body.ticket
   }
 }

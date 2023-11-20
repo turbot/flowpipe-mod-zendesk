@@ -1,24 +1,23 @@
-// usage: flowpipe pipeline run list_ticket_followers --pipeline-arg ticket_id="13"
-
+# usage: flowpipe pipeline run list_ticket_followers --pipeline-arg ticket_id="13"
 pipeline "list_ticket_followers" {
   title       = "List Ticket Followers"
   description = "List the followers of a ticket."
 
   param "api_token" {
     type        = string
-    description = "API tokens are auto-generated passwords in the Zendesk Admin Center."
+    description = local.api_token_param_description
     default     = var.api_token
   }
 
   param "user_email" {
     type        = string
-    description = "The email ID of the user the account belongs to."
+    description = local.user_email_param_description
     default     = var.user_email
   }
 
   param "subdomain" {
     type        = string
-    description = "The subdomain under which the account is created."
+    description = local.subdomain_param_description
     default     = var.subdomain
   }
 
@@ -28,7 +27,6 @@ pipeline "list_ticket_followers" {
   }
 
   step "http" "list_ticket_followers" {
-    title  = "List Ticket Followers"
     method = "get"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}/followers.json"
     request_headers = {
@@ -39,6 +37,6 @@ pipeline "list_ticket_followers" {
 
   output "ticket_followers" {
     description = "The list of followers of a ticket."
-    value       = jsondecode(step.http.list_ticket_followers.response_body).users
+    value       = step.http.list_ticket_followers.response_body.users
   }
 }

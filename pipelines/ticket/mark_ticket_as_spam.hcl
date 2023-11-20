@@ -1,24 +1,23 @@
-// usage: flowpipe pipeline run mark_ticket_as_spam --pipeline-arg ticket_id="13"
-
+# usage: flowpipe pipeline run mark_ticket_as_spam --pipeline-arg ticket_id="13"
 pipeline "mark_ticket_as_spam" {
   title       = "Mark Ticket as Spam"
   description = "Mark a ticket as spam and suspend the user."
 
   param "api_token" {
     type        = string
-    description = "API tokens are auto-generated passwords in the Zendesk Admin Center."
+    description = local.api_token_param_description
     default     = var.api_token
   }
 
   param "user_email" {
     type        = string
-    description = "The email ID of the user the account belongs to."
+    description = local.user_email_param_description
     default     = var.user_email
   }
 
   param "subdomain" {
     type        = string
-    description = "The subdomain under which the account is created."
+    description = local.subdomain_param_description
     default     = var.subdomain
   }
 
@@ -28,17 +27,11 @@ pipeline "mark_ticket_as_spam" {
   }
 
   step "http" "mark_ticket_as_spam" {
-    title  = "Mark Ticket as Spam"
     method = "put"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}/mark_as_spam.json"
     request_headers = {
       Content-Type  = "application/json"
       Authorization = "Basic ${base64encode("${param.user_email}/token:${param.api_token}")}"
     }
-  }
-
-  output "status_code" {
-    description = "HTTP response status code."
-    value       = step.http.mark_ticket_as_spam.status_code
   }
 }

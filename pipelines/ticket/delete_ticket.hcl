@@ -1,24 +1,23 @@
-// usage: flowpipe pipeline run delete_ticket --pipeline-arg ticket_id="3"
-
+# usage: flowpipe pipeline run delete_ticket --pipeline-arg ticket_id="3"
 pipeline "delete_ticket" {
   title       = "Delete Ticket"
   description = "Delete a ticket."
 
   param "api_token" {
     type        = string
-    description = "API tokens are auto-generated passwords in the Zendesk Admin Center."
+    description = local.api_token_param_description
     default     = var.api_token
   }
 
   param "user_email" {
     type        = string
-    description = "The email ID of the user the account belongs to."
+    description = local.user_email_param_description
     default     = var.user_email
   }
 
   param "subdomain" {
     type        = string
-    description = "The subdomain under which the account is created."
+    description = local.subdomain_param_description
     default     = var.subdomain
   }
 
@@ -28,7 +27,6 @@ pipeline "delete_ticket" {
   }
 
   step "http" "delete_ticket" {
-    title  = "Delete Ticket"
     method = "delete"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}.json"
     request_headers = {
@@ -36,8 +34,5 @@ pipeline "delete_ticket" {
       Authorization = "Basic ${base64encode("${param.user_email}/token:${param.api_token}")}"
     }
   }
-  output "status_code" {
-    description = "HTTP response status code."
-    value       = step.http.delete_ticket.status_code
-  }
+
 }

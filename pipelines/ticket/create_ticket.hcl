@@ -1,24 +1,23 @@
-// usage: flowpipe pipeline run create_ticket --pipeline-arg comment='{ "body":"Final new ticket for test", "public": true, "author_id": 23902305962393 }'
-
+# usage: flowpipe pipeline run create_ticket --pipeline-arg comment='{ "body":"Final new ticket for test", "public": true, "author_id": 23902305962393 }'
 pipeline "create_ticket" {
   title       = "Create Ticket"
   description = "Create a ticket."
 
   param "api_token" {
     type        = string
-    description = "API tokens are auto-generated passwords in the Zendesk Admin Center."
+    description = local.api_token_param_description
     default     = var.api_token
   }
 
   param "user_email" {
     type        = string
-    description = "The email ID of the user the account belongs to."
+    description = local.user_email_param_description
     default     = var.user_email
   }
 
   param "subdomain" {
     type        = string
-    description = "The subdomain under which the account is created."
+    description = local.subdomain_param_description
     default     = var.subdomain
   }
 
@@ -365,7 +364,6 @@ pipeline "create_ticket" {
   }
 
   step "http" "create_ticket" {
-    title  = "Create Ticket"
     method = "post"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets.json"
     request_headers = {
@@ -377,6 +375,6 @@ pipeline "create_ticket" {
 
   output "ticket" {
     description = "The ticket that has been created."
-    value       = jsondecode(step.http.create_ticket.response_body).ticket
+    value       = step.http.create_ticket.response_body.ticket
   }
 }

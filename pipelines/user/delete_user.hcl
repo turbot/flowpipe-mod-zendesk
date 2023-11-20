@@ -1,24 +1,23 @@
-// usage: flowpipe pipeline run delete_user --pipeline-arg user_id="23902353108889"
-
+# usage: flowpipe pipeline run delete_user --pipeline-arg user_id="23902353108889"
 pipeline "delete_user" {
   title       = "Delete User"
   description = "Delete a user."
 
   param "api_token" {
     type        = string
-    description = "API tokens are auto-generated passwords in the Zendesk Admin Center."
+    description = local.api_token_param_description
     default     = var.api_token
   }
 
   param "user_email" {
     type        = string
-    description = "The email ID of the user the account belongs to."
+    description = local.user_email_param_description
     default     = var.user_email
   }
 
   param "subdomain" {
     type        = string
-    description = "The subdomain under which the account is created."
+    description = local.subdomain_param_description
     default     = var.subdomain
   }
 
@@ -37,8 +36,8 @@ pipeline "delete_user" {
     }
   }
 
-  output "status_code" {
-    description = "HTTP response status code."
-    value       = step.http.delete_user.status_code
+  output "user" {
+    description = "The deleted user details."
+    value       = step.http.delete_user.response_body.user
   }
 }

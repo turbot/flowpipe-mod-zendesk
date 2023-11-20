@@ -1,24 +1,23 @@
-// usage: flowpipe pipeline run count_ticket_comments --pipeline-arg ticket_id="29"
-
-pipeline "count_ticket_comments" {
+# usage: flowpipe pipeline run ticket_comments_count --pipeline-arg ticket_id="29"
+pipeline "ticket_comments_count" {
   title       = "Count Ticket Comments"
   description = "Count the number of ticket comments."
 
   param "api_token" {
     type        = string
-    description = "API tokens are auto-generated passwords in the Zendesk Admin Center."
+    description = local.api_token_param_description
     default     = var.api_token
   }
 
   param "user_email" {
     type        = string
-    description = "The email ID of the user the account belongs to."
+    description = local.user_email_param_description
     default     = var.user_email
   }
 
   param "subdomain" {
     type        = string
-    description = "The subdomain under which the account is created."
+    description = local.subdomain_param_description
     default     = var.subdomain
   }
 
@@ -27,8 +26,7 @@ pipeline "count_ticket_comments" {
     description = "The ID of the ticket."
   }
 
-  step "http" "count_ticket_comments" {
-    title  = "Count Ticket Comments"
+  step "http" "ticket_comments_count" {
     method = "get"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}/comments/count.json"
     request_headers = {
@@ -37,8 +35,8 @@ pipeline "count_ticket_comments" {
     }
   }
 
-  output "tickets_count" {
+  output "ticket_comments_count" {
     description = "The number of ticket comments in an account."
-    value       = jsondecode(step.http.count_ticket_comments.response_body).count.value
+    value       = step.http.ticket_comments_count.response_body.count.value
   }
 }

@@ -1,29 +1,27 @@
-// usage: flowpipe pipeline run list_tickets
-
+# usage: flowpipe pipeline run list_tickets
 pipeline "list_tickets" {
   title       = "List Tickets"
   description = "List the tickets."
 
   param "api_token" {
     type        = string
-    description = "API tokens are auto-generated passwords in the Zendesk Admin Center."
+    description = local.api_token_param_description
     default     = var.api_token
   }
 
   param "user_email" {
     type        = string
-    description = "The email ID of the user the account belongs to."
+    description = local.user_email_param_description
     default     = var.user_email
   }
 
   param "subdomain" {
     type        = string
-    description = "The subdomain under which the account is created."
+    description = local.subdomain_param_description
     default     = var.subdomain
   }
 
   step "http" "list_tickets" {
-    title  = "List Tickets"
     method = "get"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets.json"
     request_headers = {
@@ -34,6 +32,11 @@ pipeline "list_tickets" {
 
   output "tickets" {
     description = "The list of all tickets in the account."
-    value       = jsondecode(step.http.list_tickets.response_body).tickets
+    value       = step.http.list_tickets.response_body.tickets
+  }
+
+  output "tickets_count" {
+    description = "The number of tickets in the account."
+    value       = step.http.list_tickets.response_body.count
   }
 }

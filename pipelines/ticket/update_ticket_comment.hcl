@@ -1,24 +1,23 @@
-// usage: flowpipe pipeline run update_ticket_comment --pipeline-arg ticket_id="16" --pipeline-arg comment='{ "body":"New updated token with loop part 3", "public": true, "author_id": 23902305962393 }'
-
+# usage: flowpipe pipeline run update_ticket_comment --pipeline-arg ticket_id="16" --pipeline-arg comment='{ "body":"New updated token with loop part 3", "public": true, "author_id": 23902305962393 }'
 pipeline "update_ticket_comment" {
   title       = "Update Ticket Comment"
   description = "Update a ticket comment."
 
   param "api_token" {
     type        = string
-    description = "API tokens are auto-generated passwords in the Zendesk Admin Center."
+    description = local.api_token_param_description
     default     = var.api_token
   }
 
   param "user_email" {
     type        = string
-    description = "The email ID of the user the account belongs to."
+    description = local.user_email_param_description
     default     = var.user_email
   }
 
   param "subdomain" {
     type        = string
-    description = "The subdomain under which the account is created."
+    description = local.subdomain_param_description
     default     = var.subdomain
   }
 
@@ -371,7 +370,6 @@ pipeline "update_ticket_comment" {
   }
 
   step "http" "update_ticket_comment" {
-    title  = "Update Ticket Comment"
     method = "put"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}.json"
     request_headers = {
@@ -383,6 +381,6 @@ pipeline "update_ticket_comment" {
 
   output "ticket" {
     description = "The updated ticket comment."
-    value       = jsondecode(step.http.update_ticket_comment.response_body).ticket
+    value       = step.http.update_ticket_comment.response_body.ticket
   }
 }

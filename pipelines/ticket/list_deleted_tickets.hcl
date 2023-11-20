@@ -1,29 +1,27 @@
-// usage: flowpipe pipeline run list_deleted_tickets
-
+# usage: flowpipe pipeline run list_deleted_tickets
 pipeline "list_deleted_tickets" {
   title       = "List Deleted Tickets"
   description = "List the deleted tickets."
 
   param "api_token" {
     type        = string
-    description = "API tokens are auto-generated passwords in the Zendesk Admin Center."
+    description = local.api_token_param_description
     default     = var.api_token
   }
 
   param "user_email" {
     type        = string
-    description = "The email ID of the user the account belongs to."
+    description = local.user_email_param_description
     default     = var.user_email
   }
 
   param "subdomain" {
     type        = string
-    description = "The subdomain under which the account is created."
+    description = local.subdomain_param_description
     default     = var.subdomain
   }
 
   step "http" "list_deleted_tickets" {
-    title  = "List Deleted Tickets"
     method = "get"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/deleted_tickets.json"
     request_headers = {
@@ -34,6 +32,6 @@ pipeline "list_deleted_tickets" {
 
   output "deleted_tickets" {
     description = "The list of deleted tickets in the account."
-    value       = jsondecode(step.http.list_deleted_tickets.response_body).deleted_tickets
+    value       = step.http.list_deleted_tickets.response_body.deleted_tickets
   }
 }

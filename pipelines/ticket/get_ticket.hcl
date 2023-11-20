@@ -1,24 +1,23 @@
-// usage: flowpipe pipeline run get_ticket --pipeline-arg ticket_id="3"
-
+# usage: flowpipe pipeline run get_ticket --pipeline-arg ticket_id="3"
 pipeline "get_ticket" {
   title       = "Get Ticket"
   description = "Get a ticket by its ticket ID."
 
   param "api_token" {
     type        = string
-    description = "API tokens are auto-generated passwords in the Zendesk Admin Center."
+    description = local.api_token_param_description
     default     = var.api_token
   }
 
   param "user_email" {
     type        = string
-    description = "The email ID of the user the account belongs to."
+    description = local.user_email_param_description
     default     = var.user_email
   }
 
   param "subdomain" {
     type        = string
-    description = "The subdomain under which the account is created."
+    description = local.subdomain_param_description
     default     = var.subdomain
   }
 
@@ -39,6 +38,6 @@ pipeline "get_ticket" {
 
   output "ticket" {
     description = "Details of a particular ticket."
-    value       = jsondecode(step.http.get_ticket.response_body).ticket
+    value       = step.http.get_ticket.response_body.ticket
   }
 }
