@@ -1,7 +1,7 @@
-# usage: flowpipe pipeline run get_user --pipeline-arg user_id="23953683763865"
-pipeline "get_user" {
-  title       = "Get User"
-  description = "Get user by a user ID."
+# usage: flowpipe pipeline run mark_ticket_as_spam --arg ticket_id="13"
+pipeline "mark_ticket_as_spam" {
+  title       = "Mark Ticket as Spam"
+  description = "Mark a ticket as spam and suspend the user."
 
   param "api_token" {
     type        = string
@@ -21,22 +21,17 @@ pipeline "get_user" {
     default     = var.subdomain
   }
 
-  param "user_id" {
+  param "ticket_id" {
     type        = string
-    description = "The user ID of the user that is being displayed."
+    description = "The ID of the ticket."
   }
 
-  step "http" "get_user" {
-    method = "get"
-    url    = "https://${param.subdomain}.zendesk.com/api/v2/users/${param.user_id}.json"
+  step "http" "mark_ticket_as_spam" {
+    method = "put"
+    url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}/mark_as_spam.json"
     request_headers = {
       Content-Type  = "application/json"
       Authorization = "Basic ${base64encode("${param.user_email}/token:${param.api_token}")}"
     }
-  }
-
-  output "user" {
-    description = "Details of a particular user."
-    value       = step.http.get_user.response_body.user
   }
 }
