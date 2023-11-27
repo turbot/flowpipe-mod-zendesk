@@ -1,7 +1,8 @@
-# usage: flowpipe pipeline run update_ticket_comment --pipeline-arg ticket_id="16" --pipeline-arg comment='{ "body":"New updated token with loop part 3", "public": true, "author_id": 23902305962393 }'
-pipeline "update_ticket_comment" {
-  title       = "Update Ticket Comment"
-  description = "Update a ticket comment."
+# usage: flowpipe pipeline run create_ticket --arg comment='{ "body":"Final new ticket for test", "public": true, "author_id": 23902305962393 }'
+# 15235899057554
+pipeline "create_ticket" {
+  title       = "Create Ticket"
+  description = "Create a ticket."
 
   param "api_token" {
     type        = string
@@ -141,11 +142,6 @@ pipeline "update_ticket_comment" {
     optional    = true
   }
 
-  param "ticket_id" {
-    type        = number
-    description = "Automatically assigned when the ticket is created."
-  }
-
   param "followers" {
     type = list(object({
       user_id = number
@@ -186,7 +182,8 @@ pipeline "update_ticket_comment" {
 
   param "ticket_id" {
     type        = number
-    description = "The ID of the ticket."
+    description = "Automatically assigned when the ticket is created."
+    optional    = true
   }
 
   param "is_public" {
@@ -208,9 +205,7 @@ pipeline "update_ticket_comment" {
   }
 
   param "metadata" {
-    type = object({
-      data = map(any)
-    })
+    type        = object({})
     description = "Write only. Metadata for the audit. In the audit object, the data is specified in the custom property of the metadata object. See Setting Metadata."
     optional    = true
   }
@@ -369,9 +364,9 @@ pipeline "update_ticket_comment" {
     optional    = true
   }
 
-  step "http" "update_ticket_comment" {
-    method = "put"
-    url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}.json"
+  step "http" "create_ticket" {
+    method = "post"
+    url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets.json"
     request_headers = {
       Content-Type  = "application/json"
       Authorization = "Basic ${base64encode("${param.user_email}/token:${param.api_token}")}"
@@ -380,7 +375,7 @@ pipeline "update_ticket_comment" {
   }
 
   output "ticket" {
-    description = "The updated ticket comment."
-    value       = step.http.update_ticket_comment.response_body.ticket
+    description = "The ticket that has been created."
+    value       = step.http.create_ticket.response_body.ticket
   }
 }

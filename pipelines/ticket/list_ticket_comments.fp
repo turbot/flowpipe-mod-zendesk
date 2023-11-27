@@ -1,4 +1,4 @@
-# usage: flowpipe pipeline run list_ticket_comments --pipeline-arg ticket_id="17"
+# usage: flowpipe pipeline run list_ticket_comments --arg ticket_id="17"
 pipeline "list_ticket_comments" {
   title       = "List Ticket Comments"
   description = "List the ticket comments."

@@ -1,7 +1,7 @@
-# usage: flowpipe pipeline run delete_ticket --pipeline-arg ticket_id="3"
-pipeline "delete_ticket" {
-  title       = "Delete Ticket"
-  description = "Delete a ticket."
+# usage: flowpipe pipeline run delete_user --arg user_id="15281051770130"
+pipeline "delete_user" {
+  title       = "Delete User"
+  description = "Delete a user."
 
   param "api_token" {
     type        = string
@@ -21,18 +21,23 @@ pipeline "delete_ticket" {
     default     = var.subdomain
   }
 
-  param "ticket_id" {
+  param "user_id" {
     type        = string
-    description = "The ID of the ticket."
+    description = "The user ID of the user to be deleted."
   }
 
-  step "http" "delete_ticket" {
+  step "http" "delete_user" {
+    title  = "Delete User"
     method = "delete"
-    url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}.json"
+    url    = "https://${param.subdomain}.zendesk.com/api/v2/users/${param.user_id}.json"
     request_headers = {
       Content-Type  = "application/json"
       Authorization = "Basic ${base64encode("${param.user_email}/token:${param.api_token}")}"
     }
   }
 
+  output "user" {
+    description = "The deleted user details."
+    value       = step.http.delete_user.response_body.user
+  }
 }

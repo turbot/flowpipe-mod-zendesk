@@ -1,7 +1,7 @@
-# usage: flowpipe pipeline run delete_user --pipeline-arg user_id="23902353108889"
-pipeline "delete_user" {
-  title       = "Delete User"
-  description = "Delete a user."
+# usage: flowpipe pipeline run get_user --arg user_id="23953683763865"
+pipeline "get_user" {
+  title       = "Get User"
+  description = "Get user by a user ID."
 
   param "api_token" {
     type        = string
@@ -23,12 +23,11 @@ pipeline "delete_user" {
 
   param "user_id" {
     type        = string
-    description = "The user ID of the user to be deleted."
+    description = "The user ID of the user that is being displayed."
   }
 
-  step "http" "delete_user" {
-    title  = "Delete User"
-    method = "delete"
+  step "http" "get_user" {
+    method = "get"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/users/${param.user_id}.json"
     request_headers = {
       Content-Type  = "application/json"
@@ -37,7 +36,7 @@ pipeline "delete_user" {
   }
 
   output "user" {
-    description = "The deleted user details."
-    value       = step.http.delete_user.response_body.user
+    description = "Details of a particular user."
+    value       = step.http.get_user.response_body.user
   }
 }

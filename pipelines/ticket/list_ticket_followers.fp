@@ -1,7 +1,7 @@
-# usage: flowpipe pipeline run get_ticket --pipeline-arg ticket_id="3"
-pipeline "get_ticket" {
-  title       = "Get Ticket"
-  description = "Get a ticket by its ticket ID."
+# usage: flowpipe pipeline run list_ticket_followers --arg ticket_id="13"
+pipeline "list_ticket_followers" {
+  title       = "List Ticket Followers"
+  description = "List the followers of a ticket."
 
   param "api_token" {
     type        = string
@@ -26,18 +26,17 @@ pipeline "get_ticket" {
     description = "The ID of the ticket."
   }
 
-  step "http" "get_ticket" {
-    title  = "Get Ticket"
+  step "http" "list_ticket_followers" {
     method = "get"
-    url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}.json"
+    url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}/followers.json"
     request_headers = {
       Content-Type  = "application/json"
       Authorization = "Basic ${base64encode("${param.user_email}/token:${param.api_token}")}"
     }
   }
 
-  output "ticket" {
-    description = "Details of a particular ticket."
-    value       = step.http.get_ticket.response_body.ticket
+  output "ticket_followers" {
+    description = "The list of followers of a ticket."
+    value       = step.http.list_ticket_followers.response_body.users
   }
 }

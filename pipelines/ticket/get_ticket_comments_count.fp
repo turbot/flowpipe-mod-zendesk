@@ -1,7 +1,7 @@
-# usage: flowpipe pipeline run mark_ticket_as_spam --pipeline-arg ticket_id="13"
-pipeline "mark_ticket_as_spam" {
-  title       = "Mark Ticket as Spam"
-  description = "Mark a ticket as spam and suspend the user."
+# usage: flowpipe pipeline run get_ticket_comments_count --arg ticket_id="29"
+pipeline "get_ticket_comments_count" {
+  title       = "Count Ticket Comments"
+  description = "Count the number of ticket comments."
 
   param "api_token" {
     type        = string
@@ -26,12 +26,17 @@ pipeline "mark_ticket_as_spam" {
     description = "The ID of the ticket."
   }
 
-  step "http" "mark_ticket_as_spam" {
-    method = "put"
-    url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}/mark_as_spam.json"
+  step "http" "get_ticket_comments_count" {
+    method = "get"
+    url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}/comments/count.json"
     request_headers = {
       Content-Type  = "application/json"
       Authorization = "Basic ${base64encode("${param.user_email}/token:${param.api_token}")}"
     }
+  }
+
+  output "ticket_comments_count" {
+    description = "The number of ticket comments in an account."
+    value       = step.http.get_ticket_comments_count.response_body.count.value
   }
 }

@@ -1,7 +1,7 @@
-# usage: flowpipe pipeline run update_ticket_status --pipeline-arg ticket_id="15" --pipeline-arg status="solved"
-pipeline "update_ticket_status" {
-  title       = "Update Ticket Status"
-  description = "Update a ticket status."
+# usage: flowpipe pipeline run update_ticket_comment --arg ticket_id="16" --arg comment='{ "body":"New updated token with loop part 3", "public": true, "author_id": 23902305962393 }'
+pipeline "update_ticket_comment" {
+  title       = "Update Ticket Comment"
+  description = "Update a ticket comment."
 
   param "api_token" {
     type        = string
@@ -28,7 +28,6 @@ pipeline "update_ticket_status" {
       author_id = number
     })
     description = "An object that defines the properties of the ticket comment."
-    optional    = true
   }
 
   param "allow_attachments" {
@@ -140,6 +139,11 @@ pipeline "update_ticket_status" {
     type        = list(number)
     description = "The IDs of agents currently following the ticket. See CCs and followers resources."
     optional    = true
+  }
+
+  param "ticket_id" {
+    type        = number
+    description = "Automatically assigned when the ticket is created."
   }
 
   param "followers" {
@@ -286,6 +290,7 @@ pipeline "update_ticket_status" {
   param "status" {
     type        = string
     description = "The state of the ticket. If your account has activated custom ticket statuses, this is the ticket's status category. See custom ticket statuses. Allowed values are 'new', 'open', 'pending', 'hold', 'solved', or 'closed'."
+    optional    = true
   }
 
   param "subject" {
@@ -364,7 +369,7 @@ pipeline "update_ticket_status" {
     optional    = true
   }
 
-  step "http" "update_ticket_status" {
+  step "http" "update_ticket_comment" {
     method = "put"
     url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}.json"
     request_headers = {
@@ -375,7 +380,7 @@ pipeline "update_ticket_status" {
   }
 
   output "ticket" {
-    description = "The updated ticket details."
-    value       = step.http.update_ticket_status.response_body.ticket
+    description = "The updated ticket comment."
+    value       = step.http.update_ticket_comment.response_body.ticket
   }
 }
