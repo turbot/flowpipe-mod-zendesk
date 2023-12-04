@@ -1,7 +1,6 @@
-# usage: flowpipe pipeline run list_users
 pipeline "list_users" {
   title       = "List Users"
-  description = "List the users."
+  description = "List the Zendesk users."
 
   param "api_token" {
     type        = string
@@ -23,15 +22,25 @@ pipeline "list_users" {
 
   step "http" "list_users" {
     method = "get"
-    url    = "https://${param.subdomain}.zendesk.com/api/v2/users.json"
+    url    = "https://${param.subdomain}.zendesk.com/api/v2/users.json?page[size]=100"
     request_headers = {
       Content-Type  = "application/json"
       Authorization = "Basic ${base64encode("${param.user_email}/token:${param.api_token}")}"
+    }
+
+    loop {
+      until = result.response_body.meta.has_more == false
+      url   = result.response_body.links.next
     }
   }
 
   output "users" {
     description = "The list of users associated to the account."
     value       = step.http.list_users.response_body.users
+  }
+
+  output "users" {
+    description = "The list of users associated to the account."
+    value       = flatten([for page, users in step.http.list_users : users.response_body.users])
   }
 }
