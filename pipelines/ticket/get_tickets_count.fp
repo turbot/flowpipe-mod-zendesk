@@ -32,6 +32,6 @@ pipeline "get_tickets_count" {
 
   output "tickets_count" {
     description = "The number of tickets in the account."
-    value       = step.http.get_tickets_count.response_body.count.value
+    value       = step.http.get_tickets_count.response_body
   }
 }

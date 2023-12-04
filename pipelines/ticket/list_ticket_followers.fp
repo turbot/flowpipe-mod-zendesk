@@ -37,6 +37,6 @@ pipeline "list_ticket_followers" {
 
   output "ticket_followers" {
     description = "The list of followers of a ticket."
-    value       = step.http.list_ticket_followers.response_body.users
+    value       = step.http.list_ticket_followers.response_body
   }
 }
