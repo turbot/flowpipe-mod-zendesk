@@ -36,11 +36,6 @@ pipeline "list_users" {
 
   output "users" {
     description = "The list of users associated to the account."
-    value       = step.http.list_users.response_body.users
-  }
-
-  output "users" {
-    description = "The list of users associated to the account."
     value       = flatten([for page, users in step.http.list_users : users.response_body.users])
   }
 }
