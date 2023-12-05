@@ -36,7 +36,7 @@ pipeline "list_tickets" {
   }
 
   output "tickets" {
-    description = "List of reports filed against the specified IP address."
+    description = "List of tickets."
     value       = flatten([for page, tickets in step.http.list_tickets : tickets.response_body.tickets])
   }
 
