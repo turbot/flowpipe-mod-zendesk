@@ -1,4 +1,3 @@
-# usage: flowpipe pipeline run get_ticket --arg ticket_id="3"
 pipeline "get_ticket" {
   title       = "Get Ticket"
   description = "Get a ticket by its ticket ID."

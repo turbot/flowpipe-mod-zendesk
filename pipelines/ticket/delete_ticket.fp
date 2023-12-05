@@ -1,4 +1,3 @@
-# usage: flowpipe pipeline run delete_ticket --arg ticket_id="3"
 pipeline "delete_ticket" {
   title       = "Delete Ticket"
   description = "Delete a ticket."

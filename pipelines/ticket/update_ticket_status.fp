@@ -1,4 +1,3 @@
-# usage: flowpipe pipeline run update_ticket_status --arg ticket_id="15" --arg status="solved"
 pipeline "update_ticket_status" {
   title       = "Update Ticket Status"
   description = "Update a ticket status."

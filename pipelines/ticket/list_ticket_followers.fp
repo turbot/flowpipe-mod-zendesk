@@ -1,4 +1,3 @@
-# usage: flowpipe pipeline run list_ticket_followers --arg ticket_id="13"
 pipeline "list_ticket_followers" {
   title       = "List Ticket Followers"
   description = "List the followers of a ticket."

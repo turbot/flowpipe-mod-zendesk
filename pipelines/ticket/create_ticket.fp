@@ -1,5 +1,3 @@
-# usage: flowpipe pipeline run create_ticket --arg comment='{ "body":"Final new ticket for test", "public": true, "author_id": 23902305962393 }'
-# 15235899057554
 pipeline "create_ticket" {
   title       = "Create Ticket"
   description = "Create a ticket."

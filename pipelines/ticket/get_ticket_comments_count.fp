@@ -1,4 +1,3 @@
-# usage: flowpipe pipeline run get_ticket_comments_count --arg ticket_id="29"
 pipeline "get_ticket_comments_count" {
   title       = "Count Ticket Comments"
   description = "Count the number of ticket comments."

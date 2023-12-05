@@ -1,4 +1,3 @@
-# usage: flowpipe pipeline run update_user --arg user_id="23902353045273" --arg name="new-abcd" --arg suspended_status="true" --arg remote_photo_url="http://link.to/profile/image.png"
 pipeline "update_user" {
   title       = "Update User"
   description = "Update a user."

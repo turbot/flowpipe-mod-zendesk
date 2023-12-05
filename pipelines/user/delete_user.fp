@@ -1,4 +1,3 @@
-# usage: flowpipe pipeline run delete_user --arg user_id="15281051770130"
 pipeline "delete_user" {
   title       = "Delete User"
   description = "Delete a user."

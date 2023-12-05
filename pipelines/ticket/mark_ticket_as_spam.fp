@@ -1,4 +1,3 @@
-# usage: flowpipe pipeline run mark_ticket_as_spam --arg ticket_id="13"
 pipeline "mark_ticket_as_spam" {
   title       = "Mark Ticket as Spam"
   description = "Mark a ticket as spam and suspend the user."

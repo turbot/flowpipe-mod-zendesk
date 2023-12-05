@@ -1,4 +1,3 @@
-# usage: flowpipe pipeline run get_user --arg user_id="23953683763865"
 pipeline "get_user" {
   title       = "Get User"
   description = "Get user by a user ID."

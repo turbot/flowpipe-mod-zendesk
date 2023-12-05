@@ -1,4 +1,3 @@
-# usage: flowpipe pipeline run get_tickets_count
 pipeline "get_tickets_count" {
   title       = "Count Tickets"
   description = "Count the number of tickets."

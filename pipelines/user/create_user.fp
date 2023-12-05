@@ -1,4 +1,3 @@
-# usage: flowpipe pipeline run create_user --arg email="test001@example.com" --arg name="test001" --arg role="end-user"
 pipeline "create_user" {
   title       = "Create User"
   description = "Create a user."
