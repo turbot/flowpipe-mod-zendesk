@@ -2,28 +2,15 @@ pipeline "update_user" {
   title       = "Update User"
   description = "Update a user."
 
-  param "api_token" {
+  param "cred" {
     type        = string
-    description = local.api_token_param_description
-    default     = var.api_token
-  }
-
-  param "user_email" {
-    type        = string
-    description = local.user_email_param_description
-    default     = var.user_email
-  }
-
-  param "subdomain" {
-    type        = string
-    description = local.subdomain_param_description
-    default     = var.subdomain
+    description = "Name for credentials to use. If not provided, the default credentials will be used."
+    default     = "default"
   }
 
   param "user_id" {
     type        = string
     description = "The user ID of the user that is being displayed."
-    optional    = true
   }
 
   param "name" {
@@ -46,10 +33,10 @@ pipeline "update_user" {
 
   step "http" "update_user" {
     method = "put"
-    url    = "https://${param.subdomain}.zendesk.com/api/v2/users/${param.user_id}.json"
+    url    = "https://${credential.zendesk[param.cred].subdomain}.zendesk.com/api/v2/users/${param.user_id}.json"
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Basic ${base64encode("${param.user_email}/token:${param.api_token}")}"
+      Authorization = "Basic ${base64encode("${credential.zendesk[param.cred].email}/token:${credential.zendesk[param.cred].token}")}"
     }
     request_body = jsonencode({ user = { for name, value in param : name => value if value != null } })
   }

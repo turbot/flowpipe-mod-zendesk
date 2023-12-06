@@ -2,22 +2,10 @@ pipeline "update_ticket_comment" {
   title       = "Update Ticket Comment"
   description = "Update a ticket comment."
 
-  param "api_token" {
+  param "cred" {
     type        = string
-    description = local.api_token_param_description
-    default     = var.api_token
-  }
-
-  param "user_email" {
-    type        = string
-    description = local.user_email_param_description
-    default     = var.user_email
-  }
-
-  param "subdomain" {
-    type        = string
-    description = local.subdomain_param_description
-    default     = var.subdomain
+    description = "Name for credentials to use. If not provided, the default credentials will be used."
+    default     = "default"
   }
 
   param "comment" {
@@ -370,10 +358,10 @@ pipeline "update_ticket_comment" {
 
   step "http" "update_ticket_comment" {
     method = "put"
-    url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}.json"
+    url    = "https://${credential.zendesk[param.cred].subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}.json"
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Basic ${base64encode("${param.user_email}/token:${param.api_token}")}"
+      Authorization = "Basic ${base64encode("${credential.zendesk[param.cred].email}/token:${credential.zendesk[param.cred].token}")}"
     }
     request_body = jsonencode({ ticket = { for name, value in param : name => value if value != null } })
   }
