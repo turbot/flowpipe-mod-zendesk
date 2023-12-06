@@ -4,13 +4,13 @@ pipeline "get_tickets_count" {
 
   param "cred" {
     type        = string
-    description = "Name for credentials to use. If not provided, the default credentials will be used."
+    description = local.cred_param_description
     default     = "default"
   }
 
   step "http" "get_tickets_count" {
     method = "get"
-    url = "https://${credential.zendesk[param.cred].subdomain}.zendesk.com/api/v2/tickets/count.json"
+    url    = "https://${credential.zendesk[param.cred].subdomain}.zendesk.com/api/v2/tickets/count.json"
     request_headers = {
       Content-Type  = "application/json"
       Authorization = "Basic ${base64encode("${credential.zendesk[param.cred].email}/token:${credential.zendesk[param.cred].token}")}"
