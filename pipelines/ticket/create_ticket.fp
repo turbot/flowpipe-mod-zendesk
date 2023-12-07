@@ -2,6 +2,10 @@ pipeline "create_ticket" {
   title       = "Create Ticket"
   description = "Create a ticket."
 
+  tags = {
+    type = "featured"
+  }
+
   param "cred" {
     type        = string
     description = local.cred_param_description

@@ -2,6 +2,10 @@ pipeline "list_tickets" {
   title       = "List Tickets"
   description = "List the tickets."
 
+  tags = {
+    type = "featured"
+  }
+
   param "cred" {
     type        = string
     description = local.cred_param_description
