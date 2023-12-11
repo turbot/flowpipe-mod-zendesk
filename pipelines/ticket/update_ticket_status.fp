@@ -2,6 +2,10 @@ pipeline "update_ticket_status" {
   title       = "Update Ticket Status"
   description = "Update a ticket status."
 
+  tags = {
+    type = "featured"
+  }
+
   param "cred" {
     type        = string
     description = local.cred_param_description

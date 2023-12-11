@@ -1,6 +1,6 @@
 pipeline "get_user" {
   title       = "Get User"
-  description = "Get user by a user ID."
+  description = "Get user by user ID."
 
   param "cred" {
     type        = string

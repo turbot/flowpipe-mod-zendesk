@@ -1,6 +1,6 @@
 pipeline "get_ticket" {
   title       = "Get Ticket"
-  description = "Get a ticket by its ticket ID."
+  description = "Get a ticket by ticket ID."
 
   param "cred" {
     type        = string
