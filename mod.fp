@@ -2,7 +2,7 @@ mod "zendesk" {
   title         = "Zendesk"
   description   = "Run pipelines to supercharge your Zendesk workflows using Flowpipe."
   color         = "#03363D"
-  documentation = file("./docs/index.md")
+  documentation = file("./README.md")
   icon          = "/images/mods/turbot/zendesk.svg"
   categories    = ["incident response"]
 
