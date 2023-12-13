@@ -73,7 +73,7 @@ vi my_pipeline.fp
 ```hcl
 pipeline "my_pipeline" {
 
-  step "pipeline" "describe_ec2_instances" {
+  step "pipeline" "get_ticket" {
     pipeline = zendesk.pipeline.get_ticket
     args = {
       ticket_id = "99999"
