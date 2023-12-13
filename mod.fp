@@ -1,14 +1,14 @@
 mod "zendesk" {
-  title         = "Zendesk Library"
+  title         = "Zendesk"
   description   = "Run pipelines to supercharge your Zendesk workflows using Flowpipe."
   color         = "#03363D"
-  documentation = file("./docs/index.md")
-  icon          = "/images/flowpipe/mods/turbot/zendesk.svg"
-  categories    = ["zendesk", "library"]
+  documentation = file("./README.md")
+  icon          = "/images/mods/turbot/zendesk.svg"
+  categories    = ["incident response"]
 
   opengraph {
-    title       = "Zendesk"
+    title       = "Zendesk Mod for Flowpipe"
     description = "Run pipelines to supercharge your Zendesk workflows using Flowpipe."
-    image       = "/images/flowpipe/mods/turbot/zendesk-social-graphic.png"
+    image       = "/images/mods/turbot/zendesk-social-graphic.png"
   }
 }

@@ -1,26 +1,12 @@
-# usage: flowpipe pipeline run list_ticket_comments --arg ticket_id="17"
 pipeline "list_ticket_comments" {
   title       = "List Ticket Comments"
   description = "List the ticket comments."
 
-  param "api_token" {
+  param "cred" {
     type        = string
-    description = local.api_token_param_description
-    default     = var.api_token
+    description = local.cred_param_description
+    default     = "default"
   }
-
-  param "user_email" {
-    type        = string
-    description = local.user_email_param_description
-    default     = var.user_email
-  }
-
-  param "subdomain" {
-    type        = string
-    description = local.subdomain_param_description
-    default     = var.subdomain
-  }
-
   param "ticket_id" {
     type        = string
     description = "The ID of the ticket."
@@ -40,15 +26,15 @@ pipeline "list_ticket_comments" {
 
   step "http" "list_ticket_comments" {
     method = "get"
-    url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}/comments.json"
+    url    = "https://${credential.zendesk[param.cred].subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}/comments.json"
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Basic ${base64encode("${param.user_email}/token:${param.api_token}")}"
+      Authorization = "Basic ${base64encode("${credential.zendesk[param.cred].email}/token:${credential.zendesk[param.cred].token}")}"
     }
   }
 
   output "ticket_comments" {
     description = "The list of all comments for a ticket."
-    value       = step.http.list_ticket_comments.response_body
+    value       = step.http.list_ticket_comments.response_body.comments
   }
 }

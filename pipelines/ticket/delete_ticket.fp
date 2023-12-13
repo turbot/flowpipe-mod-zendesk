@@ -1,24 +1,15 @@
-# usage: flowpipe pipeline run delete_ticket --arg ticket_id="3"
 pipeline "delete_ticket" {
   title       = "Delete Ticket"
   description = "Delete a ticket."
 
-  param "api_token" {
-    type        = string
-    description = local.api_token_param_description
-    default     = var.api_token
+  tags = {
+    type = "featured"
   }
-
-  param "user_email" {
+  
+  param "cred" {
     type        = string
-    description = local.user_email_param_description
-    default     = var.user_email
-  }
-
-  param "subdomain" {
-    type        = string
-    description = local.subdomain_param_description
-    default     = var.subdomain
+    description = local.cred_param_description
+    default     = "default"
   }
 
   param "ticket_id" {
@@ -28,10 +19,10 @@ pipeline "delete_ticket" {
 
   step "http" "delete_ticket" {
     method = "delete"
-    url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}.json"
+    url    = "https://${credential.zendesk[param.cred].subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}.json"
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Basic ${base64encode("${param.user_email}/token:${param.api_token}")}"
+      Authorization = "Basic ${base64encode("${credential.zendesk[param.cred].email}/token:${credential.zendesk[param.cred].token}")}"
     }
   }
 

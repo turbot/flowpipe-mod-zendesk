@@ -1,25 +1,15 @@
-# usage: flowpipe pipeline run create_ticket --arg comment='{ "body":"Final new ticket for test", "public": true, "author_id": 23902305962393 }'
-# 15235899057554
 pipeline "create_ticket" {
   title       = "Create Ticket"
   description = "Create a ticket."
 
-  param "api_token" {
-    type        = string
-    description = local.api_token_param_description
-    default     = var.api_token
+  tags = {
+    type = "featured"
   }
 
-  param "user_email" {
+  param "cred" {
     type        = string
-    description = local.user_email_param_description
-    default     = var.user_email
-  }
-
-  param "subdomain" {
-    type        = string
-    description = local.subdomain_param_description
-    default     = var.subdomain
+    description = local.cred_param_description
+    default     = "default"
   }
 
   param "comment" {
@@ -366,10 +356,10 @@ pipeline "create_ticket" {
 
   step "http" "create_ticket" {
     method = "post"
-    url    = "https://${param.subdomain}.zendesk.com/api/v2/tickets.json"
+    url    = "https://${credential.zendesk[param.cred].subdomain}.zendesk.com/api/v2/tickets.json"
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Basic ${base64encode("${param.user_email}/token:${param.api_token}")}"
+      Authorization = "Basic ${base64encode("${credential.zendesk[param.cred].email}/token:${credential.zendesk[param.cred].token}")}"
     }
     request_body = jsonencode({ ticket = { for name, value in param : name => value if value != null } })
   }

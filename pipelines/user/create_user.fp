@@ -1,24 +1,15 @@
-# usage: flowpipe pipeline run create_user --arg email="test001@example.com" --arg name="test001" --arg role="end-user"
 pipeline "create_user" {
   title       = "Create User"
   description = "Create a user."
 
-  param "api_token" {
-    type        = string
-    description = local.api_token_param_description
-    default     = var.api_token
+  tags = {
+    type = "featured"
   }
-
-  param "user_email" {
+  
+  param "cred" {
     type        = string
-    description = local.user_email_param_description
-    default     = var.user_email
-  }
-
-  param "subdomain" {
-    type        = string
-    description = local.subdomain_param_description
-    default     = var.subdomain
+    description = local.cred_param_description
+    default     = "default"
   }
 
   param "email" {
@@ -37,18 +28,12 @@ pipeline "create_user" {
     default     = "end-user"
   }
 
-  // We do not know a valid custom role ID to pass through the params
-  // param "user_custom_role_id" {
-  //   type    = string
-  //   default = "123456"
-  // }
-
   step "http" "create_user" {
     method = "post"
-    url    = "https://${param.subdomain}.zendesk.com/api/v2/users.json"
+    url    = "https://${credential.zendesk[param.cred].subdomain}.zendesk.com/api/v2/users.json"
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Basic ${base64encode("${param.user_email}/token:${param.api_token}")}"
+      Authorization = "Basic ${base64encode("${credential.zendesk[param.cred].email}/token:${credential.zendesk[param.cred].token}")}"
     }
     request_body = jsonencode({ user = { for name, value in param : name => value if value != null } })
   }
