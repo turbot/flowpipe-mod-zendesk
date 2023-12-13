@@ -18,7 +18,6 @@ pipeline "delete_user" {
   }
 
   step "http" "delete_user" {
-    title  = "Delete User"
     method = "delete"
     url    = "https://${credential.zendesk[param.cred].subdomain}.zendesk.com/api/v2/users/${param.user_id}.json"
     request_headers = {

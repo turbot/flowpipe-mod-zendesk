@@ -14,7 +14,6 @@ pipeline "get_ticket" {
   }
 
   step "http" "get_ticket" {
-    title  = "Get Ticket"
     method = "get"
     url    = "https://${credential.zendesk[param.cred].subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}.json"
     request_headers = {
