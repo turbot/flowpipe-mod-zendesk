@@ -17,13 +17,6 @@ brew tap turbot/tap
 brew install flowpipe
 ```
 
-Clone:
-
-```sh
-git clone https://github.com/turbot/flowpipe-mod-zendesk.git
-cd flowpipe-mod-zendesk
-```
-
 ### Credentials
 
 By default, the following environment variables will be used for authentication:
