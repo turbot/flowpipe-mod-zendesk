@@ -1,3 +1,9 @@
+## v0.1.1 [2024-03-04]
+
+_Bug fixes_
+
+- Removed duplicate `ticket_id` param from `update_ticket_comment` pipeline.
+
 ## v0.1.0 [2023-12-13]
 
 _What's new?_
