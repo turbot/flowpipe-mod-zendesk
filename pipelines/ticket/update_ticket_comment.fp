@@ -171,11 +171,6 @@ pipeline "update_ticket_comment" {
     optional    = true
   }
 
-  param "ticket_id" {
-    type        = number
-    description = "The ID of the ticket."
-  }
-
   param "is_public" {
     type        = bool
     description = "Is true if any comments are public, false otherwise."
