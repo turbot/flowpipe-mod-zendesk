@@ -195,7 +195,7 @@ pipeline "create_ticket" {
   }
 
   param "metadata" {
-    type        = object({})
+    type        = map
     description = "Write only. Metadata for the audit. In the audit object, the data is specified in the custom property of the metadata object. See Setting Metadata."
     optional    = true
   }

@@ -1,3 +1,9 @@
+## v0.1.2 [2024-03-05]
+
+_Bug fixes_
+
+- Update `metadata` param type in `create_ticket` pipeline to be consistent with similar param types.
+
 ## v0.1.1 [2024-03-04]
 
 _Bug fixes_
