@@ -2,10 +2,10 @@ pipeline "get_ticket" {
   title       = "Get Ticket"
   description = "Get a ticket by ticket ID."
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.zendesk
+    description = local.conn_param_description
+    default     = connection.zendesk.default
   }
 
   param "ticket_id" {
@@ -15,10 +15,10 @@ pipeline "get_ticket" {
 
   step "http" "get_ticket" {
     method = "get"
-    url    = "https://${credential.zendesk[param.cred].subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}.json"
+    url    = "https://${param.conn.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}.json"
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Basic ${base64encode("${credential.zendesk[param.cred].email}/token:${credential.zendesk[param.cred].token}")}"
+      Authorization = "Basic ${base64encode("${param.conn.email}/token:${param.conn.token}")}"
     }
   }
 

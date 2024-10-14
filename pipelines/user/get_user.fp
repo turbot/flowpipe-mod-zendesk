@@ -2,10 +2,10 @@ pipeline "get_user" {
   title       = "Get User"
   description = "Get user by user ID."
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.zendesk
+    description = local.conn_param_description
+    default     = connection.zendesk.default
   }
 
   param "user_id" {
@@ -15,10 +15,10 @@ pipeline "get_user" {
 
   step "http" "get_user" {
     method = "get"
-    url    = "https://${credential.zendesk[param.cred].subdomain}.zendesk.com/api/v2/users/${param.user_id}.json"
+    url    = "https://${param.conn.subdomain}.zendesk.com/api/v2/users/${param.user_id}.json"
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Basic ${base64encode("${credential.zendesk[param.cred].email}/token:${credential.zendesk[param.cred].token}")}"
+      Authorization = "Basic ${base64encode("${param.conn.email}/token:${param.conn.token}")}"
     }
   }
 

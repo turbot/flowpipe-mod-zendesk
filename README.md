@@ -17,7 +17,7 @@ brew tap turbot/tap
 brew install flowpipe
 ```
 
-### Credentials
+### Connections
 
 By default, the following environment variables will be used for authentication:
 
@@ -25,21 +25,21 @@ By default, the following environment variables will be used for authentication:
 - `ZENDESK_EMAIL`
 - `ZENDESK_SUBDOMAIN`
 
-You can also create `credential` resources in configuration files:
+You can also create `connection` resources in configuration files:
 
 ```sh
 vi ~/.flowpipe/config/zendesk.fpc
 ```
 
 ```hcl
-credential "zendesk" "default" {
+connection "zendesk" "default" {
   email      = "pam@dmi.com"
   subdomain  = "dmi"
   token      = "17ImlCYdfZ3WJIrGk96gCpJn1fi1pLwVdrb23kj4"
 }
 ```
 
-For more information on credentials in Flowpipe, please see [Managing Credentials](https://flowpipe.io/docs/run/credentials).
+For more information on connections in Flowpipe, please see [Managing Connections](https://flowpipe.io/docs/run/connections).
 
 ### Usage
 
@@ -102,10 +102,10 @@ Run a pipeline:
 flowpipe pipeline run get_ticket --arg ticket_id=99999
 ```
 
-To use a specific `credential`, specify the `cred` pipeline argument:
+To use a specific `connection`, specify the `conn` pipeline argument:
 
 ```sh
-flowpipe pipeline run get_ticket --arg ticket_id=99999 --arg cred=zendesk_profile
+flowpipe pipeline run get_ticket --arg ticket_id=99999 --arg conn=connection.zendesk.zendesk_profile
 ```
 
 ## Open Source & Contributing

@@ -3,13 +3,13 @@ pipeline "create_ticket" {
   description = "Create a ticket."
 
   tags = {
-    type = "featured"
+    recommended = "true"
   }
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.zendesk
+    description = local.conn_param_description
+    default     = connection.zendesk.default
   }
 
   param "comment" {
@@ -356,10 +356,10 @@ pipeline "create_ticket" {
 
   step "http" "create_ticket" {
     method = "post"
-    url    = "https://${credential.zendesk[param.cred].subdomain}.zendesk.com/api/v2/tickets.json"
+    url    = "https://${param.conn.subdomain}.zendesk.com/api/v2/tickets.json"
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Basic ${base64encode("${credential.zendesk[param.cred].email}/token:${credential.zendesk[param.cred].token}")}"
+      Authorization = "Basic ${base64encode("${param.conn.email}/token:${param.conn.token}")}"
     }
     request_body = jsonencode({ ticket = { for name, value in param : name => value if value != null } })
   }
