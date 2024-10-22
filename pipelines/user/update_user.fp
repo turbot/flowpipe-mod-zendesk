@@ -2,10 +2,10 @@ pipeline "update_user" {
   title       = "Update User"
   description = "Update a user."
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.zendesk
+    description = local.conn_param_description
+    default     = connection.zendesk.default
   }
 
   param "user_id" {
@@ -33,10 +33,10 @@ pipeline "update_user" {
 
   step "http" "update_user" {
     method = "put"
-    url    = "https://${credential.zendesk[param.cred].subdomain}.zendesk.com/api/v2/users/${param.user_id}.json"
+    url    = "https://${param.conn.subdomain}.zendesk.com/api/v2/users/${param.user_id}.json"
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Basic ${base64encode("${credential.zendesk[param.cred].email}/token:${credential.zendesk[param.cred].token}")}"
+      Authorization = "Basic ${base64encode("${param.conn.email}/token:${param.conn.token}")}"
     }
     request_body = jsonencode({ user = { for name, value in param : name => value if value != null } })
   }

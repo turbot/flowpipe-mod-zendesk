@@ -2,10 +2,10 @@ pipeline "list_ticket_followers" {
   title       = "List Ticket Followers"
   description = "List the followers of a ticket."
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.zendesk
+    description = local.conn_param_description
+    default     = connection.zendesk.default
   }
 
   param "ticket_id" {
@@ -15,10 +15,10 @@ pipeline "list_ticket_followers" {
 
   step "http" "list_ticket_followers" {
     method = "get"
-    url    = "https://${credential.zendesk[param.cred].subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}/followers.json"
+    url    = "https://${param.conn.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}/followers.json"
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Basic ${base64encode("${credential.zendesk[param.cred].email}/token:${credential.zendesk[param.cred].token}")}"
+      Authorization = "Basic ${base64encode("${param.conn.email}/token:${param.conn.token}")}"
     }
   }
 

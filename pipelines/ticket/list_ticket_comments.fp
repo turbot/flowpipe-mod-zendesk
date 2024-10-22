@@ -2,10 +2,10 @@ pipeline "list_ticket_comments" {
   title       = "List Ticket Comments"
   description = "List the ticket comments."
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.zendesk
+    description = local.conn_param_description
+    default     = connection.zendesk.default
   }
   param "ticket_id" {
     type        = string
@@ -26,10 +26,10 @@ pipeline "list_ticket_comments" {
 
   step "http" "list_ticket_comments" {
     method = "get"
-    url    = "https://${credential.zendesk[param.cred].subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}/comments.json"
+    url    = "https://${param.conn.subdomain}.zendesk.com/api/v2/tickets/${param.ticket_id}/comments.json"
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Basic ${base64encode("${credential.zendesk[param.cred].email}/token:${credential.zendesk[param.cred].token}")}"
+      Authorization = "Basic ${base64encode("${param.conn.email}/token:${param.conn.token}")}"
     }
   }
 

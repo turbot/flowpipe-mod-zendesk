@@ -2,18 +2,18 @@ pipeline "list_users" {
   title       = "List Users"
   description = "List the Zendesk users."
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.zendesk
+    description = local.conn_param_description
+    default     = connection.zendesk.default
   }
 
   step "http" "list_users" {
     method = "get"
-    url    = "https://${credential.zendesk[param.cred].subdomain}.zendesk.com/api/v2/users.json?page[size]=100"
+    url    = "https://${param.conn.subdomain}.zendesk.com/api/v2/users.json?page[size]=100"
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Basic ${base64encode("${credential.zendesk[param.cred].email}/token:${credential.zendesk[param.cred].token}")}"
+      Authorization = "Basic ${base64encode("${param.conn.email}/token:${param.conn.token}")}"
     }
 
     loop {
